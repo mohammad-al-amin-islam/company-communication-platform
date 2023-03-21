@@ -15,7 +15,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className="text-center">This is Main</h1>
+      <h1 className="text-center mt-40 text-5xl">Welcome to <br></br>Company Communicaton Platform</h1>
     </>
   );
 }
