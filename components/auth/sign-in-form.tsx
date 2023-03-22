@@ -1,14 +1,28 @@
 import Link from "next/link";
 import React, { useRef } from "react";
+import { signIn } from "next-auth/react";
+
 const SignInForm = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     console.log(email, password);
+
+    const result = await signIn("credentials", {
+      redirect: false,
+      email: email,
+      password: password,
+    });
+
+    if (result.ok) {
+      event.target.reset();
+      alert("Login successful");
+    }
+    console.log(result);
   };
   return (
     <div className="max-w-md w-full">

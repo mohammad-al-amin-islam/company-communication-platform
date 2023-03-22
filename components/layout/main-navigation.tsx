@@ -1,8 +1,10 @@
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useState } from "react";
 
 const MainNavigationBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session } = useSession();
   return (
     <nav className="bg-gray-800">
       <div className="mx-auto px-4 py-2 sm:max-w-7xl sm:px-6 lg:px-8">
@@ -43,12 +45,22 @@ const MainNavigationBar = () => {
             >
               Home
             </Link>
-            <Link
-              href="/sign-in"
-              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-            >
-              Sign In
-            </Link>
+            {!session && (
+              <Link
+                href="/sign-in"
+                className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Sign In
+              </Link>
+            )}
+            {session && (
+              <button
+                className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                onClick={() => signOut()}
+              >
+                Sign out
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -64,12 +76,22 @@ const MainNavigationBar = () => {
           >
             Home
           </Link>
-          <Link
-            href="/sign-in"
-            className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-          >
-            Sign In
-          </Link>
+          {!session && (
+            <Link
+              href="/sign-in"
+              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+            >
+              Sign In
+            </Link>
+          )}
+          {session && (
+            <button
+              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              onClick={() => signOut()}
+            >
+              Sign out
+            </button>
+          )}
         </div>
       </div>
     </nav>

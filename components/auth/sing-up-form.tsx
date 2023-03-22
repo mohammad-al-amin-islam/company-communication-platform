@@ -1,3 +1,4 @@
+import axios from "axios";
 import Link from "next/link";
 import React, { useRef } from "react";
 const SignUpForm = () => {
@@ -5,12 +6,33 @@ const SignUpForm = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  const handleSignUpSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSignUpSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
     const name = nameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    console.log(name,email, password);
+    
+
+    const data = {
+      email: email,
+      password: password,
+      username: name,
+      role: "admin",
+    };
+
+    try {
+      const res = await axios.post("/api/auth/signup", data);
+      console.log(res.data);
+      if(res.data.message.data.insert_users_one.email){
+        event.target.reset();
+        alert("Account created successfully");
+      }
+    } catch (e:any) {
+      alert( e.response.data.message)
+      console.log(e.response.data.message)
+    }
   };
 
   return (
