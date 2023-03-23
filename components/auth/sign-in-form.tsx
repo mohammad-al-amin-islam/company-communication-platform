@@ -18,6 +18,10 @@ const SignInForm = () => {
       password: password,
     });
 
+    if (!result.ok) {
+      event.target.reset();
+      alert("Worng Password");
+    }
     if (result.ok) {
       event.target.reset();
       alert("Login successful");

@@ -5,6 +5,40 @@ import React, { useState } from "react";
 const MainNavigationBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: session } = useSession();
+  const navitems = (
+    <>
+      <Link
+        href="/"
+        className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+      >
+        Home
+      </Link>
+      {!session && (
+        <Link
+          href="/sign-in"
+          className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+        >
+          Sign In
+        </Link>
+      )}
+      {session && (
+        <Link
+          href="/dashboard"
+          className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+        >
+          Dashboard
+        </Link>
+      )}
+      {session && (
+        <button
+          className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+          onClick={() => signOut()}
+        >
+          Sign out
+        </button>
+      )}
+    </>
+  );
   return (
     <nav className="bg-gray-800">
       <div className="mx-auto px-4 py-2 sm:max-w-7xl sm:px-6 lg:px-8">
@@ -38,30 +72,7 @@ const MainNavigationBar = () => {
               </svg>
             </button>
           </div>
-          <div className="hidden sm:flex sm:items-center">
-            <Link
-              href="/"
-              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-            >
-              Home
-            </Link>
-            {!session && (
-              <Link
-                href="/sign-in"
-                className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Sign In
-              </Link>
-            )}
-            {session && (
-              <button
-                className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                onClick={() => signOut()}
-              >
-                Sign out
-              </button>
-            )}
-          </div>
+          <div className="hidden sm:flex sm:items-center">{navitems}</div>
         </div>
       </div>
 
@@ -69,30 +80,7 @@ const MainNavigationBar = () => {
         className={`${isOpen ? "block" : "hidden"} sm:hidden`}
         id="mobile-menu"
       >
-        <div className="px-2 pt-2 pb-3 space-y-1">
-          <Link
-            href="/"
-            className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-          >
-            Home
-          </Link>
-          {!session && (
-            <Link
-              href="/sign-in"
-              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-            >
-              Sign In
-            </Link>
-          )}
-          {session && (
-            <button
-              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              onClick={() => signOut()}
-            >
-              Sign out
-            </button>
-          )}
-        </div>
+        <div className="px-2 pt-2 pb-3 space-y-1">{navitems}</div>
       </div>
     </nav>
   );

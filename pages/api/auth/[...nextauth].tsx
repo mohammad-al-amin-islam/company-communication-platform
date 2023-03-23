@@ -1,7 +1,7 @@
 import axios from "axios";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-
+import * as jsonwebtoken from "jsonwebtoken";
 export default NextAuth({
   session: {
     strategy: "jwt",
@@ -15,7 +15,7 @@ export default NextAuth({
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {},
-      async authorize(credentials:any, req:any): Promise<any>{
+      async authorize(credentials: any, req: any): Promise<any> {
         // Add logic here to look up the user from the credentials supplied
 
         const hasuraEndPoint = "https://easy-reptile-22.hasura.app/v1/graphql";
@@ -46,13 +46,10 @@ export default NextAuth({
         const existEmail = result.data.users.find(
           (user: any) => user.email === credentials.email
         );
-        console.log(existEmail)
         if (!existEmail) {
           throw new Error("No user found");
         }
-        console.log(credentials.email,credentials.password)
         const validPassword = existEmail.password == credentials.password;
-        console.log(validPassword);
 
         if (!validPassword) {
           throw new Error("Incorrect Password");
@@ -62,4 +59,48 @@ export default NextAuth({
       },
     }),
   ],
+
+  jwt: {
+    encode: ({ secret, token }) => {
+      
+      const encodedToken = jsonwebtoken.sign(token!, secret, {
+        algorithm: "HS256",
+      });
+      // console.log(encodedToken);
+      return encodedToken;
+    },
+    decode: async ({ secret, token }) => {
+      const decodedToken = jsonwebtoken.verify(token!, secret, {
+        algorithms: ["HS256"],
+      });
+      return decodedToken as JWT;
+    },
+  },
+
+  callbacks: {
+    // Add the required Hasura claims
+    // https://hasura.io/docs/latest/graphql/core/auth/authentication/jwt/#the-spec
+    async jwt({ token }) {
+      console.log(token);
+      return {
+        ...token,
+        "https://hasura.io/jwt/claims": {
+          "x-hasura-allowed-roles": ["user"],
+          "x-hasura-default-role": "user",
+          "x-hasura-role": "user",
+          "x-hasura-user-id": token.sub,
+        },
+      };
+    },
+    // Add user ID to the session
+    session: async ({ session, token }) => {
+      // console.log(token.sub)
+      // console.log(session)
+      
+      if (session?.user) {
+        session.user.id = token.sub!;
+      }
+      return session;
+    },
+  },
 });
