@@ -6,7 +6,7 @@ type Child = {
 
 const Layout = ({ children }: Child) => {
   return (
-    <div>
+    <div className="max-w-[1440px] mx-auto">
       <MainNavigationBar />
       <main>{children}</main>
     </div>

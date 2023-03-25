@@ -2,6 +2,7 @@ import axios from "axios";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import * as jsonwebtoken from "jsonwebtoken";
+import { signInQuery } from "@/lib/query/hasuraQueries";
 export default NextAuth({
   session: {
     strategy: "jwt",
@@ -25,16 +26,7 @@ export default NextAuth({
         //get all data of users email addresses
         const { data: result }: any = await axios.post(
           hasuraEndPoint,
-          {
-            query: `
-              query MyQuery {
-                users {
-                  email
-                  password
-                }
-              }
-          `,
-          },
+          signInQuery,
           {
             headers: {
               "Content-Type": "application/json",
@@ -62,7 +54,6 @@ export default NextAuth({
 
   jwt: {
     encode: ({ secret, token }) => {
-      
       const encodedToken = jsonwebtoken.sign(token!, secret, {
         algorithm: "HS256",
       });
@@ -81,7 +72,7 @@ export default NextAuth({
     // Add the required Hasura claims
     // https://hasura.io/docs/latest/graphql/core/auth/authentication/jwt/#the-spec
     async jwt({ token }) {
-      console.log(token);
+      // console.log(token);
       return {
         ...token,
         "https://hasura.io/jwt/claims": {
@@ -96,7 +87,7 @@ export default NextAuth({
     session: async ({ session, token }) => {
       // console.log(token.sub)
       // console.log(session)
-      
+
       if (session?.user) {
         session.user.id = token.sub!;
       }

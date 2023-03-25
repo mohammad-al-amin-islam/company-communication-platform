@@ -18,13 +18,13 @@ const SignInForm = () => {
       password: password,
     });
 
-    if (!result.ok) {
-      event.target.reset();
-      alert("Worng Password");
-    }
-    if (result.ok) {
+    if (result?.ok) {
       event.target.reset();
       alert("Login successful");
+    }
+    if (!result?.ok) {
+      event.target?.reset();
+      alert(result?.error);
     }
     console.log(result);
   };
