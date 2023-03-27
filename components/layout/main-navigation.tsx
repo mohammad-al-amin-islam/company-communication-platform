@@ -40,7 +40,7 @@ const MainNavigationBar = () => {
     </>
   );
   return (
-    <nav className="bg-gray-800">
+    <nav className="bg-gradient-to-r from-pink-500 to-purple-500 via-blue-500 bg-gradient-repeating">
       <div className="mx-auto px-4 py-2 sm:max-w-7xl sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <div className="flex items-center">

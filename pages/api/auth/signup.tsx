@@ -4,7 +4,7 @@ async function handler(req: any, res: any) {
   if (req.method !== "POST") {
     return;
   }
-  console.log(req.body);
+  // console.log(req.body);
 
   const email = req.body.email;
   const password = req.body.password;

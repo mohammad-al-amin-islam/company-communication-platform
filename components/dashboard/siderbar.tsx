@@ -3,18 +3,18 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
-const Sidebar = () => {
-  const { data: session } = useSession();
-  const email = session?.user?.email;
+const Sidebar = ({admin:isAdmin}:any) => {
+  // const { data: session } = useSession();
+  // const email = session?.user?.email;
 
-  const [role, isLoading] = useAdmin(email);
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-  const isAdmin = role[0];
+  // const [role, isLoading] = useAdmin(email);
+  // if (isLoading) {
+  //   return <p>Loading...</p>;
+  // }
+  // const isAdmin = role[0];
 
   return (
-    <div className="bg-red-800 h-screen w-64 text-white flex flex-col">
+    <div className="bg-gradient-to-br from-green-400 to-blue-500 h-screen w-64 text-white flex flex-col">
       <div className="p-4 flex items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,7 @@ const Sidebar = () => {
           )}
           {isAdmin && (
             <li className="mb-4">
-              <Link href="/dashboard/user-list" className="hover:text-gray-200">
+              <Link href="/dashboard/remove-user" className="hover:text-gray-200">
                 Remove user
               </Link>
             </li>

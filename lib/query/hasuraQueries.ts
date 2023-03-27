@@ -5,6 +5,9 @@ export const signInQuery = {
         users {
             email
             password
+            role
+            name
+            id
         }
     }
     `,
@@ -37,4 +40,21 @@ export const allUserQuery = {
       }
     
     `,
+};
+
+//remove user form query
+export const removeUserQuery = (email: any) => {
+  const removeuserinfo = {
+    query: `
+      mutation {
+        delete_users(where: {email: {_eq: "${email}"}}) {
+          returning {
+            id
+            role
+          }
+        }
+      }`,
+  };
+
+  return removeuserinfo;
 };

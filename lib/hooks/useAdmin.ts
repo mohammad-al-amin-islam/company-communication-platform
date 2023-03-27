@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useState } from "react";
 import { useAddminHasuraQuery } from "../query/hasuraQueries";
 import { useQuery } from "react-query";
 
@@ -19,7 +18,8 @@ export const useAdmin = (user: any) => {
     })
   );
 
-  const role = data?.data?.data.users.map((user:any) => user.role === "admin");
+  const role = data?.data?.data.users.find((user:any) => user.role === "admin");
+  console.log(role?.role);
   return [role, isLoading];
 };
 

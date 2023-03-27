@@ -13,9 +13,8 @@ const RequireAdmin = ({children}:any) => {
     if(isLoading){
         return <p>loading...</p>
     }
-    const isAdmin = role[0];
 
-    if(!isAdmin || !session){
+    if(!role || !session){
         router.replace('/');
         return;
     }

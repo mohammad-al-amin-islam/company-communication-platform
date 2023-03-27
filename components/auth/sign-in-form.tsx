@@ -8,8 +8,8 @@ const SignInForm = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
+    const email = emailRef.current?.value;
+    const password = passwordRef.current?.value;
     console.log(email, password);
 
     const result = await signIn("credentials", {
