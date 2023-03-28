@@ -18,6 +18,6 @@ namespace NodeJS {
       TWITTER_ID: string
       TWITTER_SECRET: string
       DATABASE_URL: string
-      SECRET: string
+      NEXTAUTH_SECRET: string
     }
   }

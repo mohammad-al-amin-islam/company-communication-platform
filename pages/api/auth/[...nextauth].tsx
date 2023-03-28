@@ -97,7 +97,7 @@ export default NextAuth({
       // console.log(session);
       // console.log("se",token);
 
-      const encodedToken = jsonwebtoken.sign(token, process.env.SECRET, {
+      const encodedToken = jsonwebtoken.sign(token, process.env.NEXTAUTH_SECRET, {
         algorithm: "HS256",
       });
       console.log(encodedToken)
