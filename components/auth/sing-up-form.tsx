@@ -5,6 +5,7 @@ const SignUpForm = () => {
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSignUpSubmit = async (
     event: React.FormEvent<HTMLFormElement>
@@ -26,7 +27,7 @@ const SignUpForm = () => {
       const res = await axios.post("/api/auth/signup", data);
       console.log(res.data);
       if(res.data.message.data.insert_users_one.email){
-        event.target.reset();
+        formRef.current?.reset();
         alert("Account created successfully");
       }
     } catch (e:any) {
@@ -38,7 +39,7 @@ const SignUpForm = () => {
   return (
     <div className="max-w-md w-full">
       <div className="bg-white p-6 rounded-lg shadow-md">
-        <form onSubmit={handleSignUpSubmit}>
+        <form onSubmit={handleSignUpSubmit} ref={formRef}>
           <h2 className="text-2xl mb-6 font-bold text-gray-800 text-center uppercase">
             Sign Up Here
           </h2>

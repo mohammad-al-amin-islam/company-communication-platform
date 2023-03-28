@@ -60,11 +60,10 @@ export default NextAuth({
   ],
 
   jwt: {
-    encode: ({ secret, token, }) => {
+    encode: ({ secret, token }) => {
       const encodedToken = jsonwebtoken.sign(token!, secret, {
         algorithm: "HS256",
       });
-      console.log(token);
       return encodedToken;
     },
     decode: async ({ secret, token }) => {
@@ -85,21 +84,28 @@ export default NextAuth({
         ...token,
         ...user,
         "https://hasura.io/jwt/claims": {
-          "x-hasura-allowed-roles": ["user","admin","member"],
-          "x-hasura-default-role": "user",
+          "x-hasura-allowed-roles": ["Manager", "admin", "member"],
+          "x-hasura-default-role": "admin",
           "x-hasura-role": token.role,
           "x-hasura-user-id": token.sub,
         },
       };
     },
     // Add user ID to the session
-    session: async ({ session, token,}) => {
+    session: async ({ session, token }:any) => {
       // console.log(token.sub)
       // console.log(session);
+      // console.log("se",token);
+
+      const encodedToken = jsonwebtoken.sign(token, process.env.SECRET, {
+        algorithm: "HS256",
+      });
+      console.log(encodedToken)
 
       if (session?.user) {
         session.user.id = token.sub!;
         session.user.role = token.role!;
+        session.accessToken = encodedToken;
       }
       return session;
     },

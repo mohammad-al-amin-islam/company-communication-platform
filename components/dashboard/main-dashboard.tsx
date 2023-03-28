@@ -8,13 +8,13 @@ const Dashboard = ({ children }: any) => {
   const email = session?.user?.email;
 
   const [role, isLoading] = useAdmin(email);
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="border-4 border-gray-300 rounded-full w-12 h-12 animate-spin"></div>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <div className="border-4 border-gray-300 rounded-full w-12 h-12 animate-spin"></div>
+  //     </div>
+  //   );
+  // }
   return (
     <div className="flex">
       <Sidebar admin={role} />

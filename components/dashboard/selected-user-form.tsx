@@ -1,48 +1,45 @@
-import axios from "axios";
-import { useState,useRef } from "react";
+import getAllUsers from "@/lib/hooks/getAllUsers";
+import { updateUserInfo } from "@/lib/query/hasuraQueries";
+import { useState, useRef } from "react";
+import Loading from "../shared/loading";
 
-const AddUserForm = () => {
+const SelectedUserForm = ({ user,isLoading}: any) => {
   const [selectedOption, setSelectedOption] = useState("");
-  const nameValueRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
   const passwordRef = useRef<HTMLInputElement>(null);
   const selectedOptionRef = useRef<HTMLSelectElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
+
+  if(isLoading){
+    return <Loading/>
+  }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const role = selectedOptionRef.current?.value ?? "";
-    const name = nameValueRef.current?.value ?? "";
-    const email = emailRef.current?.value?? "";
-    const password = passwordRef.current?.value?? "";
+    const password = passwordRef.current?.value ?? "";
 
 
-    const data = {
-      email: email,
-      password: password,
-      username: name,
-      role: role,
-    };
 
+    const query = updateUserInfo(user.id,role,password)
 
-    try {
-      const res = await axios.post("/api/auth/signup", data);
-      console.log(res.data);
-      if(res.data.message.data.insert_users_one.email){
+    const data = await getAllUsers(query);
+    if(data){
+        alert("Succesfully updated")
         formRef.current?.reset();
-        alert("User created successfully");
-      }
-    } catch (e:any) {
-      alert( e.response.data.message)
-      console.log(e.response.data.message)
     }
 
+    
   };
 
   return (
     <div className="flex flex-col items-center ">
-      <h1 className="my-10 text-3xl font-medium">Add user here</h1>
-      <form className="flex flex-col w-2/4 shadow-lg p-7" ref={formRef} onSubmit={handleSubmit}>
+      <h1 className="my-10 text-3xl font-medium">Edit user here</h1>
+      <form
+        className="flex flex-col w-2/4 shadow-lg p-7"
+        onSubmit={handleSubmit}
+        ref={formRef}
+      >
         <div>
           <label htmlFor="input" className="mb-2">
             Enter user name:
@@ -51,8 +48,9 @@ const AddUserForm = () => {
             type="text"
             name="Name"
             id="name"
-            ref={nameValueRef}
             className="w-full p-2 mb-4 rounded-md shadow-md"
+            value={user.name}
+            disabled
           />
         </div>
         <div>
@@ -63,13 +61,14 @@ const AddUserForm = () => {
             type="text"
             name="email"
             id="email"
-            ref={emailRef}
+            value={user.email}
+            disabled
             className="w-full p-2 mb-4 rounded-md shadow-md"
           />
         </div>
         <div>
           <label htmlFor="input" className="mb-2">
-            Set a password for the user:
+            Set a new password for the user:
           </label>
           <input
             type="password"
@@ -79,9 +78,9 @@ const AddUserForm = () => {
             className="w-full p-2 mb-4 rounded-md shadow-md"
           />
         </div>
-        
+
         <label htmlFor="options" className="mb-2">
-          Select a role for user:
+          Change role for this user:
         </label>
         <select
           name="options"
@@ -105,4 +104,4 @@ const AddUserForm = () => {
   );
 };
 
-export default AddUserForm;
+export default SelectedUserForm;

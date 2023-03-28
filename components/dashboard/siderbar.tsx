@@ -1,5 +1,5 @@
-import useAdmin from "@/lib/hooks/useAdmin";
-import { useSession } from "next-auth/react";
+// import useAdmin from "@/lib/hooks/useAdmin";
+// import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
@@ -54,7 +54,7 @@ const Sidebar = ({admin:isAdmin}:any) => {
           )}
           {isAdmin && (
             <li className="mb-4">
-              <Link href="/dashboard/user-list" className="hover:text-gray-200">
+              <Link href="/dashboard/edit-user" className="hover:text-gray-200">
                 Edit user
               </Link>
             </li>

@@ -5,6 +5,7 @@ import { signIn } from "next-auth/react";
 const SignInForm = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -19,11 +20,11 @@ const SignInForm = () => {
     });
 
     if (result?.ok) {
-      event.target.reset();
+      formRef.current?.reset();
       alert("Login successful");
     }
     if (!result?.ok) {
-      event.target?.reset();
+      formRef.current?.reset();
       alert(result?.error);
     }
     console.log(result);
@@ -31,7 +32,7 @@ const SignInForm = () => {
   return (
     <div className="max-w-md w-full">
       <div className="bg-white p-6 rounded-lg shadow-md">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} ref={formRef}>
           <h2 className="text-2xl mb-6 font-bold text-gray-800 text-center uppercase">
             Sign in Here
           </h2>

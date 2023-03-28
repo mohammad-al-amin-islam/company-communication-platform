@@ -2,13 +2,14 @@ import getAllUsers from "@/lib/hooks/getAllUsers";
 import { allUserQuery } from "@/lib/query/hasuraQueries";
 import React from "react";
 import { useQuery } from "react-query";
+import Loading from "../shared/loading";
 
 const UserListInfo = () => {
   const { data, isLoading } = useQuery(["alluser", allUserQuery], () =>
     getAllUsers(allUserQuery)
   );
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   return (

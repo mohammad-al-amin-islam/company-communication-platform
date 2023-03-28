@@ -1,3 +1,4 @@
+import Loading from '@/components/shared/loading';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -11,7 +12,7 @@ const RequireAdmin = ({children}:any) => {
     const router = useRouter();
     
     if(isLoading){
-        return <p>loading...</p>
+        return <Loading/>
     }
 
     if(!role || !session){

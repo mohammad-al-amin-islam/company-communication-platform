@@ -1,10 +1,12 @@
+import Dashboard from "@/components/dashboard/main-dashboard";
 import getAllUsers from "@/lib/hooks/getAllUsers";
 import { allUserQuery, removeUserQuery } from "@/lib/query/hasuraQueries";
+import Link from "next/link";
 import React from "react";
 import { useQuery } from "react-query";
 import Loading from "../shared/loading";
 
-const RemoveUserForm = () => {
+const EditUserForm = () => {
   const { data, isLoading } = useQuery(["alluser", allUserQuery], () =>
     getAllUsers(allUserQuery)
   );
@@ -19,7 +21,7 @@ const RemoveUserForm = () => {
 
     const data = await getAllUsers(query);
     if (data.data.delete_users.returning[0].id) {
-        alert("User Removed successfully");
+      alert("User Revoved successfully");
     }
   };
 
@@ -52,12 +54,12 @@ const RemoveUserForm = () => {
               <td className="py-3 px-6 text-left">{user.email}</td>
               <td className="py-3 px-6 text-left">
                 {user.role !== "admin" && (
-                  <button
+                  <Link
+                    href={`/dashboard/edit-user/${user.id}`}
                     className="bg-blue-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md focus:outline-none focus:shadow-outline"
-                    onClick={() => handleButtonClick(user.email)}
                   >
-                    Remove
-                  </button>
+                    Edit User
+                  </Link>
                 )}
               </td>
             </tr>
@@ -68,4 +70,4 @@ const RemoveUserForm = () => {
   );
 };
 
-export default RemoveUserForm;
+export default EditUserForm;
