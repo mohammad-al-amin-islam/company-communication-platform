@@ -13,7 +13,7 @@ const RemoveUserForm = () => {
   }
 
   const handleButtonClick = async (email: string) => {
-    console.log(email);
+    // console.log(email);
 
     const query = removeUserQuery(email);
 

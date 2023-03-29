@@ -80,7 +80,7 @@ export const getUserById = (id: any) => {
 
 // edit user info query
 
-export const updateUserInfo = (id: any,role:string,password:any) => {
+export const updateUserInfo = (id: any, role: string, password: any) => {
   const removeuserinfo = {
     query: `
     mutation {
@@ -91,4 +91,95 @@ export const updateUserInfo = (id: any,role:string,password:any) => {
   };
 
   return removeuserinfo;
+};
+
+//create teams query
+export const createTeams = (name: any, id: any) => {
+  const createTeamsQuery = {
+    query: `
+          mutation {
+            insert_teams(objects: {admin_id: ${id}, name: "${name}"}) {
+              affected_rows
+              returning {
+                name
+              }
+            }
+          }`,
+  };
+
+  return createTeamsQuery;
+};
+
+// create teams query
+export const allTeamsQuery = {
+  query: `
+      query MyQuery {
+        teams {
+          id
+          name
+          created_at
+        }
+      }
+    `,
+};
+
+//remove team query
+export const removeTeams = (id: any) => {
+  const removeTeamsQuery = {
+    query: `
+    mutation {
+      delete_teams_by_pk(id: ${id}) {
+        name
+      }
+    }`,
+  };
+
+  return removeTeamsQuery;
+};
+
+//getAllusersInformation
+
+export const allUserInfo = {
+  query: `
+  query MyQuery {
+    users {
+      role
+      id
+      name
+    }
+  }
+    `,
+};
+
+//add team members qurey
+
+export const addTeamsMembers = (teamId: any, userId: any) => {
+  const addToTheTeams = {
+    query: `
+    mutation {
+      insert_team_members_one(object: {team_id: ${teamId}, user_id: ${userId}},) {
+        id
+      }
+    }`,
+  };
+
+  return addToTheTeams;
+};
+
+//all perticipant list
+
+export const allPerticipantInfo = {
+  query: `
+  query MyQuery {
+    team_members {
+      user_id
+      id
+      team_id
+      user {
+        name
+        created_at
+      }
+    }
+  }
+    `,
 };

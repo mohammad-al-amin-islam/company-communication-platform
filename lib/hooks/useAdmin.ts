@@ -19,7 +19,7 @@ export const useAdmin = (user: any) => {
   );
 
   const role = data?.data?.data.users.find((user:any) => user.role === "admin");
-  console.log(role?.role);
+  // console.log(role?.role);
   return [role, isLoading];
 };
 

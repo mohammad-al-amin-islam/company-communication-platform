@@ -76,6 +76,7 @@ const SelectedUserForm = ({ user,isLoading}: any) => {
             id="input"
             ref={passwordRef}
             className="w-full p-2 mb-4 rounded-md shadow-md"
+            required
           />
         </div>
 
@@ -87,10 +88,12 @@ const SelectedUserForm = ({ user,isLoading}: any) => {
           id="options"
           ref={selectedOptionRef}
           className="w-full p-2 mb-4 rounded-md shadow-md"
+          required
         >
           <option value="">--Select--</option>
-          <option value="Manager">Manager</option>
-          <option value="Member">Member</option>
+          <option value="manager">Manager</option>
+          <option value="member">Member</option>
+          <option value="admin">Admin</option>
         </select>
 
         <button

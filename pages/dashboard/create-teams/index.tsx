@@ -1,18 +1,18 @@
+import CreateTeamForm from "@/components/dashboard/create-team-form";
 import Dashboard from "@/components/dashboard/main-dashboard";
-import RemoveUserForm from "@/components/dashboard/remove-user-form";
 import RequireAdmin from "@/lib/secured-page/require-admin";
 import React from "react";
 
-const RemoveUser = () => {
+const CreateTeams = () => {
   return (
     <>
       <Dashboard>
         <RequireAdmin>
-          <RemoveUserForm />
+          <CreateTeamForm />
         </RequireAdmin>
       </Dashboard>
     </>
   );
 };
 
-export default RemoveUser;
+export default CreateTeams;

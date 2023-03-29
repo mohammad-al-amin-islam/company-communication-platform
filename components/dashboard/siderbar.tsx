@@ -59,6 +59,20 @@ const Sidebar = ({admin:isAdmin}:any) => {
               </Link>
             </li>
           )}
+          {isAdmin && (
+            <li className="mb-4">
+              <Link href="/dashboard/create-teams" className="hover:text-gray-200">
+                Create Teams
+              </Link>
+            </li>
+          )}
+          {isAdmin && (
+            <li className="mb-4">
+              <Link href="/dashboard/manage-teams" className="hover:text-gray-200">
+                Manage Teams
+              </Link>
+            </li>
+          )}
 
           <li className="mb-4">
             <Link href="#" className="hover:text-gray-200">

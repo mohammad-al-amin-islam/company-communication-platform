@@ -100,7 +100,7 @@ export default NextAuth({
       const encodedToken = jsonwebtoken.sign(token, process.env.NEXTAUTH_SECRET, {
         algorithm: "HS256",
       });
-      console.log(encodedToken)
+      // console.log(encodedToken)
 
       if (session?.user) {
         session.user.id = token.sub!;
