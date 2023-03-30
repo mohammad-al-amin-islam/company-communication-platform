@@ -1,5 +1,5 @@
 import axiosCall from "@/lib/hooks/axiosCall";
-import { allTeamsQuery, createTeams } from "@/lib/query/hasuraQueries";
+import {  allTeamsQueryById, createTeams } from "@/lib/query/hasuraQueries";
 import { useSession } from "next-auth/react";
 import { useRef } from "react";
 import { useQuery } from "react-query";
@@ -28,7 +28,7 @@ const CreateTeamForm = () => {
     }
   };
 
-  const query2 = allTeamsQuery;
+  const query2 = allTeamsQueryById(adminID);
 
   const { data, isLoading } = useQuery(["allgroups", query2], () =>
     axiosCall(token, query2)

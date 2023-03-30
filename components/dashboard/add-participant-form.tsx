@@ -3,6 +3,7 @@ import {
   addTeamsMembers,
   allPerticipantInfo,
   allUserInfo,
+  deleteTeamsMembers,
 } from "@/lib/query/hasuraQueries";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -21,11 +22,14 @@ const AddParticipantForm = ({ id }: any) => {
     axiosCall(session?.accessToken, query)
   );
 
+  //ger teams participant information
+  const teamsQuery = allPerticipantInfo(id);
   const { data: teamMembers } = useQuery(
     ["allParticioant", allPerticipantInfo],
-    () => axiosCall(session?.accessToken, allPerticipantInfo)
+    () => axiosCall(session?.accessToken, teamsQuery)
   );
-  //   console.log(teamMembers.data.team_members);
+  console.log(teamMembers);
+  // console.log(teamMembers.data.team_members);
   if (isLoading) {
     return <Loading />;
   }
@@ -35,12 +39,35 @@ const AddParticipantForm = ({ id }: any) => {
 
     const teamId = id;
     const userId = selectedOptionRef.current?.value ?? "";
+    console.log(userId);
+
+    const addedMemeber = teamMembers.data.team_members.find(
+      (teamMember: any) => teamMember.user.id == userId
+    );
+    if (addedMemeber) {
+      alert("Already in the team");
+      return;
+    }
+    console.log(addedMemeber);
 
     const query2 = addTeamsMembers(teamId, userId);
 
     const res = await axiosCall(session?.accessToken, query2);
     if (res.data.insert_team_members_one) {
-      alert("User added to the group successfully");
+      alert("User added to the team successfully");
+    }
+  };
+
+  const handleDeleteTParticipantBtn = async (id: any) => {
+    // const query = removeTeams(id);
+    const query = deleteTeamsMembers(id)
+
+    console.log(id);
+
+    const data = await axiosCall(session?.accessToken, query);
+    console.log(data);
+    if (data.data.delete_team_members_by_pk.id) {
+      alert("Participant deleted successfully");
     }
   };
 
@@ -83,12 +110,12 @@ const AddParticipantForm = ({ id }: any) => {
         <thead>
           <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
             <th className="py-3 px-6 text-left">Name</th>
-            <th className="py-3 px-6 text-left">Creating time</th>
+            <th className="py-3 px-6 text-left">Adding time</th>
             <th className="py-3 px-6 text-left">Delete Participant</th>
           </tr>
         </thead>
         <tbody className="text-gray-600 text-sm font-light">
-          {teamMembers?.data?.team_members?.map((user: any) => (
+          {teamMembers?.data?.team_members.map((user: any) => (
             <tr
               key={user.id}
               className="border-b border-gray-200 hover:bg-gray-100"
@@ -98,11 +125,14 @@ const AddParticipantForm = ({ id }: any) => {
               </td>
               <td className="py-3 px-6 text-left">{user.user.created_at}</td>
               <td className="py-3 px-6 text-left">
-                <button className="bg-blue-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md focus:outline-none focus:shadow-outline">
+                <button
+                  onClick={() => handleDeleteTParticipantBtn(user.id)}
+                  className="bg-blue-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md focus:outline-none focus:shadow-outline"
+                >
                   Remove
                 </button>
               </td>
-              {/* <td className="py-3 px-6 text-left">{user.email}</td> */}
+              <td className="py-3 px-6 text-left">{user.email}</td>
             </tr>
           ))}
         </tbody>

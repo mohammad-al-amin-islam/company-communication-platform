@@ -1,5 +1,6 @@
 import AddParticipantForm from "@/components/dashboard/add-participant-form";
 import Dashboard from "@/components/dashboard/main-dashboard";
+import RequireAdmin from "@/lib/secured-page/require-admin";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -7,11 +8,12 @@ const AddParticipant = () => {
   const { query } = useRouter();
   const id = query.id;
 
-
   return (
     <>
       <Dashboard>
-        <AddParticipantForm id={id}/>
+        <RequireAdmin>
+          <AddParticipantForm id={id} />
+        </RequireAdmin>
       </Dashboard>
     </>
   );

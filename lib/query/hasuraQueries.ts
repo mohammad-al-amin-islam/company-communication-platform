@@ -123,6 +123,21 @@ export const allTeamsQuery = {
     `,
 };
 
+//all teams query
+export const allTeamsQueryById = (id: any) => {
+  const allTeamsQuery = {
+    query: `query MyQuery {
+      teams(where: {admin_id: {_eq: ${id}}}) {
+        created_at
+        id
+        name
+      }
+    }`,
+  };
+
+  return allTeamsQuery;
+};
+
 //remove team query
 export const removeTeams = (id: any) => {
   const removeTeamsQuery = {
@@ -168,17 +183,87 @@ export const addTeamsMembers = (teamId: any, userId: any) => {
 
 //all perticipant list
 
-export const allPerticipantInfo = {
+export const allPerticipantInfo = (id: any) => {
+  const allTeamsParticipant = {
+    query: `query MyQuery {
+      team_members(where: {team_id: {_eq: ${id}}}) {
+        id
+        user {
+          name
+          created_at
+          id
+        }
+      }
+    }`,
+  };
+  return allTeamsParticipant;
+};
+
+//delete perticipant info
+
+export const deleteTeamsMembers = (id: any) => {
+  const deleteFormTheTeam = {
+    query: `
+    mutation {
+      delete_team_members_by_pk(id: ${id}) {
+        id
+        team_id
+      }
+    }`,
+  };
+
+  return deleteFormTheTeam;
+};
+
+//get all the teams of an user
+
+export const getAllTeamsForUser = (id: any) => {
+  const userTeams = {
+    query: `
+    query MyQuery {
+      teams(where: {team_members: {user_id: {_eq: ${id}}}}) {
+        id
+        name
+      }
+    }`,
+  };
+
+  return userTeams;
+};
+
+
+
+//send message to teams
+export const getSendMessageQuery = (content:any,teamId: any,userId:any) => {
+  const sendMessage = {
+    query: `
+    mutation {
+      insert_messages_one(object: {content: "${content}", team_id: ${teamId}, user_id: ${userId}}) {
+        created_at
+        content
+        id
+        user_id
+        team_id
+      }
+    }`,
+  };
+
+  return sendMessage;
+};
+
+
+
+
+//get all messages
+export const getAllMessage = {
   query: `
   query MyQuery {
-    team_members {
-      user_id
+    messages {
+      content
       id
+      created_at
       team_id
-      user {
-        name
-        created_at
-      }
+      user_id
     }
   }
     `,

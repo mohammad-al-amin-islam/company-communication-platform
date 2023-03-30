@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React from "react";
 
-const Sidebar = ({admin:isAdmin}:any) => {
+const Sidebar = ({ admin: isAdmin }: any) => {
   // const { data: session } = useSession();
   // const email = session?.user?.email;
 
@@ -47,7 +47,10 @@ const Sidebar = ({admin:isAdmin}:any) => {
           )}
           {isAdmin && (
             <li className="mb-4">
-              <Link href="/dashboard/remove-user" className="hover:text-gray-200">
+              <Link
+                href="/dashboard/remove-user"
+                className="hover:text-gray-200"
+              >
                 Remove user
               </Link>
             </li>
@@ -61,18 +64,33 @@ const Sidebar = ({admin:isAdmin}:any) => {
           )}
           {isAdmin && (
             <li className="mb-4">
-              <Link href="/dashboard/create-teams" className="hover:text-gray-200">
+              <Link
+                href="/dashboard/create-teams"
+                className="hover:text-gray-200"
+              >
                 Create Teams
               </Link>
             </li>
           )}
           {isAdmin && (
             <li className="mb-4">
-              <Link href="/dashboard/manage-teams" className="hover:text-gray-200">
+              <Link
+                href="/dashboard/manage-teams"
+                className="hover:text-gray-200"
+              >
                 Manage Teams
               </Link>
             </li>
           )}
+
+          <li className="mb-4">
+            <Link
+              href="/dashboard/start-conversation"
+              className="hover:text-gray-200"
+            >
+              Start Conversation
+            </Link>
+          </li>
 
           <li className="mb-4">
             <Link href="#" className="hover:text-gray-200">
