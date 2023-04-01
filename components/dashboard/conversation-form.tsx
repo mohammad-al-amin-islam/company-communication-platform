@@ -1,25 +1,64 @@
 import axiosCall from "@/lib/hooks/axiosCall";
-import { getAllMessage, getSendMessageQuery } from "@/lib/query/hasuraQueries";
+import {
+  deleteMessegeQuery,
+  getAllMessage,
+  getSendMessageQuery,
+  getSpecificTeamMessage,
+  getTeamInfo,
+} from "@/lib/query/hasuraQueries";
+import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import Loading from "../shared/loading";
 
-interface IMessage {
-  id: number;
-  text: string;
-  sender: string;
-  time: string;
-}
-
 const ConversationForm = () => {
-
   const messageValueRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const { data: session }: any = useSession();
   const { query } = useRouter();
- 
+  const teamInfoQuery = getTeamInfo(query.id);
+
+  const { data: teamData,isLoading:tLoading } = useQuery("allTeams", () =>
+    axiosCall(session?.accessToken, teamInfoQuery)
+  );
+  console.log(teamData);
+
+  // const insert_messages_one = `{
+  //   mutation createUser($input: any!) {
+  //     insert_messages_one(object: {content: $content, team_id: $team_id, user_id: $user_id}) {
+  //       content
+  //       id
+  //       team_id
+  //       user_id
+  //     }
+  //   }
+  // }`
+
+  //sending data using Mutation
+  // const [mutate, { isLoading:mLoading }]:any = useMutation(
+  //   async (input: any) => {
+  //     const token = `${session.accessToken}`; // Replace with your actual auth token
+  //     const headers = { Authorization: `Bearer ${token}` };
+  //     const { data } = await axios.post(process.env.hasuraApi as string, {
+  //       query: insert_messages_one,
+  //       variables: { input },
+  //     }, { headers });
+  //     return data;
+  //   },
+  //   {
+  //     onSuccess: (data) => {
+  //       console.log('User created:', data);
+  //     },
+  //   }
+  // );
+
+  const allMessagesQuery = getSpecificTeamMessage(query.id);
+  const { data, refetch, isLoading } = useQuery("allMessages", () =>
+    axiosCall(session?.accessToken, allMessagesQuery)
+  );
+
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const message = messageValueRef.current?.value;
@@ -31,54 +70,62 @@ const ConversationForm = () => {
     const insertQuery = getSendMessageQuery(message, teamId, userId);
 
     const data = await axiosCall(session?.accessToken, insertQuery);
+    // await mutate({ message, userId, teamId });
 
     console.log(data.data.insert_messages_one);
 
     if (data.data.insert_messages_one) {
       formRef.current?.reset();
+      refetch();
     }
   };
 
   //for deleting messages
-  const handleDeleteMessage = (id: number) => {
-    // setMessages(messages.filter((message) => message.id !== id));
+  const handleDeleteMessage = async (id: number) => {
+    console.log(id);
+    const deleteQuery = deleteMessegeQuery(id);
+    const data = await axiosCall(session.accessToken, deleteQuery);
+    console.log(data);
+    refetch();
   };
 
-
-  const allMessagesQuery = getAllMessage;
-
-  const {data,refetch,isLoading} = useQuery("allMessages",()=>axiosCall(session?.accessToken,allMessagesQuery))
-
-  if(isLoading){
-    return <Loading/>
+  if (isLoading || tLoading) {
+    return <Loading />;
   }
-  console.log(data)
-  if(data.data.messages){
-    refetch()
-  }
+  // console.log(data);
 
   return (
     <div className="flex flex-col h-screen bg-white">
+      <div className="p-4 border-b-2">
+        <h1 className="text-lg font-semibold">{teamData.data.teams_by_pk.name}</h1>
+      </div>
       <div className="flex-1 p-4 overflow-y-auto">
         <div className="flex flex-col space-y-4">
-          {data.data.messages.map((message:any) => (
+          {data.data.messages.map((message: any) => (
             <div
               key={message.id}
               className={`flex ${
-                message.user_id == session?.user?.id ? "justify-end" : "justify-start"
+                message.user_id == session?.user?.id
+                  ? "justify-end"
+                  : "justify-start"
               }`}
             >
+              <span className="text-xs text-gray-500 mr-1">
+                {message.user.name.split(" ")[0]}
+              </span>
               <div
                 className={`bg-gray-200 px-4 py-2 rounded-lg max-w-xs ${
-                    message.user_id == session?.user?.id ? "ml-4" : "mr-4"
+                  message.user_id == session?.user?.id ? "ml-4" : "mr-4"
                 }`}
               >
                 <p className="text-gray-700">{message.content}</p>
                 <div className="flex justify-between">
-                  <span className="text-xs text-gray-500">{message.created_at}</span>
+                  <span className="text-xs text-gray-500">
+                    {message.created_at.split(":")[0]}
+                  </span>
                   {message.user_id == session?.user?.id && (
                     <button
-                      className="text-gray-500 hover:text-gray-700"
+                      className="text-gray-500 hover:text-gray-700 ml-2"
                       onClick={() => handleDeleteMessage(message.id)}
                     >
                       Delete

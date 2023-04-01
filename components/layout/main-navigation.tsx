@@ -4,7 +4,9 @@ import React, { useState } from "react";
 
 const MainNavigationBar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { data: session } = useSession();
+  const { data: session }: any = useSession();
+
+  const firstName = session?.user?.name.split(" ");
   const navitems = (
     <>
       <Link
@@ -36,6 +38,11 @@ const MainNavigationBar = () => {
         >
           Sign Out
         </button>
+      )}
+      {session && (
+        <p className="text-gray-300 bg-slate-400 hover:text-white px-3 py-3 rounded-full text-sm font-medium">
+          {firstName[0]}
+        </p>
       )}
     </>
   );

@@ -90,8 +90,8 @@ const AddUserForm = () => {
           className="w-full p-2 mb-4 rounded-md shadow-md"
         >
           <option value="">--Select--</option>
-          <option value="Manager">Manager</option>
-          <option value="Member">Member</option>
+          <option value="manager">Manager</option>
+          <option value="member">Member</option>
         </select>
 
         <button

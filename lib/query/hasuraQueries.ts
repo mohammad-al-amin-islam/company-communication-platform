@@ -268,3 +268,57 @@ export const getAllMessage = {
   }
     `,
 };
+
+
+//get specific groups messages 
+export const getSpecificTeamMessage = (id: any) => {
+  const getAllMessage = {
+    query: `
+    query MyQuery {
+      messages(where: {team_id: {_eq: ${id}}}) {
+        content
+        created_at
+        id
+        team_id
+        user_id
+        user {
+          name
+        }
+      }
+    }`,
+  };
+
+  return getAllMessage;
+};
+
+
+//delete message 
+
+
+export const deleteMessegeQuery = (id:any) => {
+  const deleteMessage = {
+    query: `
+    mutation {
+      delete_messages_by_pk(id: ${id}) {
+        team_id
+        user_id
+      }
+    }`,
+  };
+
+  return deleteMessage;
+};
+
+// get teamInfo
+
+export const getTeamInfo = (id: any) => {
+  const getTeam = {
+    query: `query MyQuery {
+      teams_by_pk(id: ${id}) {
+        name
+      }
+    }`,
+  };
+
+  return getTeam;
+};

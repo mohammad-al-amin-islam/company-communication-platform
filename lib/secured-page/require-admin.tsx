@@ -1,26 +1,26 @@
-import Loading from '@/components/shared/loading';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import React from 'react';
-import useAdmin from '../hooks/useAdmin';
+import Loading from "@/components/shared/loading";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import React from "react";
+import useAdmin from "../hooks/useAdmin";
 
-const RequireAdmin = ({children}:any) => {
+const RequireAdmin = ({ children }: any) => {
+  const { data: session, status } = useSession();
+  // const email = session?.user?.email;
+  // const [role,isLoading] = useAdmin(email);
+  const router = useRouter();
+  const admminFS = session?.user?.role;
 
-    const {data:session} = useSession();
-    const email = session?.user?.email;
-    const [role,isLoading] = useAdmin(email);
-    const router = useRouter();
-    
-    if(isLoading){
-        return <Loading/>
-    }
+  if ( status === "loading") {
+    return <Loading />;
+  }
 
-    if(!role || !session){
-        router.replace('/');
-        return;
-    }
+  if (admminFS!="admin" || !session) {
+    router.replace("/");
+    return;
+  }
 
-    return children;
+  return children;
 };
 
 export default RequireAdmin;

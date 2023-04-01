@@ -1,17 +1,17 @@
 // import useAdmin from "@/lib/hooks/useAdmin";
 // import { useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
 const Sidebar = ({ admin: isAdmin }: any) => {
-  // const { data: session } = useSession();
-  // const email = session?.user?.email;
 
-  // const [role, isLoading] = useAdmin(email);
-  // if (isLoading) {
-  //   return <p>Loading...</p>;
-  // }
-  // const isAdmin = role[0];
+
+  const {data:session}:any = useSession();
+  const admminFS = session?.user?.role;
+  
+  const adminFS = !!admminFS
+  console.log(adminFS)
 
   return (
     <div className="bg-gradient-to-br from-green-400 to-blue-500 h-screen w-64 text-white flex flex-col">
@@ -31,21 +31,21 @@ const Sidebar = ({ admin: isAdmin }: any) => {
       </div>
       <div className="flex-grow overflow-y-auto">
         <ul className="p-4">
-          {isAdmin && (
+          {admminFS=="admin" && (
             <li className="mb-4">
               <Link href="/dashboard/user-list" className="hover:text-gray-200">
                 UserList
               </Link>
             </li>
           )}
-          {isAdmin && (
+          {admminFS=="admin" && (
             <li className="mb-4">
               <Link href="/dashboard/add-user" className="hover:text-gray-200">
                 Add User
               </Link>
             </li>
           )}
-          {isAdmin && (
+          {admminFS=="admin" && (
             <li className="mb-4">
               <Link
                 href="/dashboard/remove-user"
@@ -55,14 +55,14 @@ const Sidebar = ({ admin: isAdmin }: any) => {
               </Link>
             </li>
           )}
-          {isAdmin && (
+          {admminFS=="admin" && (
             <li className="mb-4">
               <Link href="/dashboard/edit-user" className="hover:text-gray-200">
                 Edit user
               </Link>
             </li>
           )}
-          {isAdmin && (
+          {admminFS=="admin" && (
             <li className="mb-4">
               <Link
                 href="/dashboard/create-teams"
@@ -72,7 +72,7 @@ const Sidebar = ({ admin: isAdmin }: any) => {
               </Link>
             </li>
           )}
-          {isAdmin && (
+          {admminFS=="admin" && (
             <li className="mb-4">
               <Link
                 href="/dashboard/manage-teams"

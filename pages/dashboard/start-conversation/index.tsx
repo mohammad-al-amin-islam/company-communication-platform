@@ -1,12 +1,15 @@
 import Dashboard from "@/components/dashboard/main-dashboard";
 import StartCoversationComponent from "@/components/dashboard/start-conversation-component";
+import PotectedSessionRoute from "@/lib/secured-page/protected-session-route";
 import React from "react";
 
 const StartConverstion = () => {
   return (
     <>
       <Dashboard>
-        <StartCoversationComponent></StartCoversationComponent>
+        <PotectedSessionRoute>
+          <StartCoversationComponent></StartCoversationComponent>
+        </PotectedSessionRoute>
       </Dashboard>
     </>
   );
