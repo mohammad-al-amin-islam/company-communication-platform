@@ -11,7 +11,7 @@ const Sidebar = ({ admin: isAdmin }: any) => {
   const admminFS = session?.user?.role;
   
   const adminFS = !!admminFS
-  console.log(adminFS)
+  // console.log(adminFS)
 
   return (
     <div className="bg-gradient-to-br from-green-400 to-blue-500 h-screen w-64 text-white flex flex-col">

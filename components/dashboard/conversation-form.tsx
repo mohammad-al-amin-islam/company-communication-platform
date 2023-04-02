@@ -5,6 +5,7 @@ import {
   getSendMessageQuery,
   getSpecificTeamMessage,
   getTeamInfo,
+  sentMessageUsingMutation,
 } from "@/lib/query/hasuraQueries";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -23,41 +24,38 @@ const ConversationForm = () => {
   const { data: teamData,isLoading:tLoading } = useQuery("allTeams", () =>
     axiosCall(session?.accessToken, teamInfoQuery)
   );
-  console.log(teamData);
 
-  // const insert_messages_one = `{
-  //   mutation createUser($input: any!) {
-  //     insert_messages_one(object: {content: $content, team_id: $team_id, user_id: $user_id}) {
-  //       content
-  //       id
-  //       team_id
-  //       user_id
-  //     }
-  //   }
-  // }`
 
-  //sending data using Mutation
-  // const [mutate, { isLoading:mLoading }]:any = useMutation(
-  //   async (input: any) => {
-  //     const token = `${session.accessToken}`; // Replace with your actual auth token
-  //     const headers = { Authorization: `Bearer ${token}` };
-  //     const { data } = await axios.post(process.env.hasuraApi as string, {
-  //       query: insert_messages_one,
-  //       variables: { input },
-  //     }, { headers });
-  //     return data;
-  //   },
-  //   {
-  //     onSuccess: (data) => {
-  //       console.log('User created:', data);
-  //     },
-  //   }
-  // );
-
+  //all messages
   const allMessagesQuery = getSpecificTeamMessage(query.id);
   const { data, refetch, isLoading } = useQuery("allMessages", () =>
     axiosCall(session?.accessToken, allMessagesQuery)
   );
+
+
+  const inserTedQuery = sentMessageUsingMutation;
+
+  //sending data using Mutation
+  const {mutate,  isLoading:mLoading,data:insertedData }:any = useMutation(
+    async (input: any) => {
+      const token = `${session.accessToken}`;
+      const headers = { Authorization: `Bearer ${token}` };
+      const { data } = await axios.post(process.env.hasuraApi as string, {
+        query: inserTedQuery,
+        variables: { content:input.message,team_id:input.teamId ,user_id:input.userId},
+      }, { headers });
+      return data;
+    },
+    {
+      onSuccess: (data) => {
+        console.log('Message sent');
+        refetch();
+      },
+    }
+  );
+
+  
+  // console.log(data)
 
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -67,14 +65,14 @@ const ConversationForm = () => {
 
     console.log(message, userId, teamId);
 
-    const insertQuery = getSendMessageQuery(message, teamId, userId);
+    // const insertQuery = getSendMessageQuery(message, teamId, userId);
+    // const data = await axiosCall(session?.accessToken, insertQuery);
 
-    const data = await axiosCall(session?.accessToken, insertQuery);
-    // await mutate({ message, userId, teamId });
+    await mutate({ message, userId, teamId });
+    formRef.current?.reset();
+    console.log(insertedData)
 
-    console.log(data.data.insert_messages_one);
-
-    if (data.data.insert_messages_one) {
+    if (insertedData?.data.insert_messages_one) {
       formRef.current?.reset();
       refetch();
     }

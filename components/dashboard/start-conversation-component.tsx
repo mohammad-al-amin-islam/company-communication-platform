@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
+import Loading from "../shared/loading";
 import Card from "./start-conversation-card";
 
 const StartCoversationComponent = () => {
@@ -12,15 +13,18 @@ const StartCoversationComponent = () => {
   const { data: session }: any = useSession();
   const query = getAllTeamsForUser(session?.user?.id);
 
-  const { data } = useQuery(["allTeamsSUser", session?.user?.id], () =>
+  const { data ,isLoading} = useQuery(["allTeamsSUser", session?.user?.id], () =>
     axiosCall(session?.accessToken, query)
   );
 
   const handleButtonClick = (id: any) => {
     router.push(`/dashboard/start-conversation/${id}`);
   };
+  if(isLoading){
+    return <Loading/>
+  }
 
-  console.log(data?.data?.teams);
+  console.log(data);
   
   return (
     <div className="flex flex-col items-center">

@@ -40,7 +40,7 @@ const MainNavigationBar = () => {
         </button>
       )}
       {session && (
-        <p className="text-gray-300 bg-slate-400 hover:text-white px-3 py-3 rounded-full text-sm font-medium">
+        <p className="bg-slate-400 text-white px-3 py-3 rounded-full text-sm font-medium">
           {firstName[0]}
         </p>
       )}

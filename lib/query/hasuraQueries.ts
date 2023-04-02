@@ -231,10 +231,8 @@ export const getAllTeamsForUser = (id: any) => {
   return userTeams;
 };
 
-
-
 //send message to teams
-export const getSendMessageQuery = (content:any,teamId: any,userId:any) => {
+export const getSendMessageQuery = (content: any, teamId: any, userId: any) => {
   const sendMessage = {
     query: `
     mutation {
@@ -251,8 +249,20 @@ export const getSendMessageQuery = (content:any,teamId: any,userId:any) => {
   return sendMessage;
 };
 
-
-
+//send message using mutation
+export const sentMessageUsingMutation = `
+  
+  mutation MyMutation($content: String = "", $user_id: Int = 10, $team_id: Int = 10) {
+    insert_messages_one(object: {content: $content, user_id: $user_id, team_id: $team_id}) {
+      content
+      created_at
+      id
+      team_id
+      user_id
+    }
+  }
+  
+  `
 
 //get all messages
 export const getAllMessage = {
@@ -269,8 +279,7 @@ export const getAllMessage = {
     `,
 };
 
-
-//get specific groups messages 
+//get specific groups messages
 export const getSpecificTeamMessage = (id: any) => {
   const getAllMessage = {
     query: `
@@ -291,11 +300,9 @@ export const getSpecificTeamMessage = (id: any) => {
   return getAllMessage;
 };
 
+//delete message
 
-//delete message 
-
-
-export const deleteMessegeQuery = (id:any) => {
+export const deleteMessegeQuery = (id: any) => {
   const deleteMessage = {
     query: `
     mutation {

@@ -84,8 +84,8 @@ export default NextAuth({
         ...token,
         ...user,
         "https://hasura.io/jwt/claims": {
-          "x-hasura-allowed-roles": ["Manager", "admin", "member"],
-          "x-hasura-default-role": "admin",
+          "x-hasura-allowed-roles": ["manager", "admin", "member"],
+          "x-hasura-default-role": token.role,
           "x-hasura-role": token.role,
           "x-hasura-user-id": token.sub,
         },
