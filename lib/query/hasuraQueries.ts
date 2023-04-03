@@ -131,6 +131,7 @@ export const allTeamsQueryById = (id: any) => {
         created_at
         id
         name
+        admin_id
       }
     }`,
   };

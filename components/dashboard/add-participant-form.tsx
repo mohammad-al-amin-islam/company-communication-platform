@@ -60,7 +60,7 @@ const AddParticipantForm = ({ id }: any) => {
 
   const handleDeleteTParticipantBtn = async (id: any) => {
     // const query = removeTeams(id);
-    const query = deleteTeamsMembers(id)
+    const query = deleteTeamsMembers(id);
 
     console.log(id);
 
@@ -125,12 +125,14 @@ const AddParticipantForm = ({ id }: any) => {
               </td>
               <td className="py-3 px-6 text-left">{user.user.created_at}</td>
               <td className="py-3 px-6 text-left">
-                <button
-                  onClick={() => handleDeleteTParticipantBtn(user.id)}
-                  className="bg-blue-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md focus:outline-none focus:shadow-outline"
-                >
-                  Remove
-                </button>
+                {user.user.id == session.user.id?"admin" : (
+                  <button
+                    onClick={() => handleDeleteTParticipantBtn(user.id)}
+                    className="bg-blue-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md focus:outline-none focus:shadow-outline"
+                  >
+                    Remove
+                  </button>
+                )}
               </td>
               <td className="py-3 px-6 text-left">{user.email}</td>
             </tr>

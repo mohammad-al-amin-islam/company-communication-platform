@@ -80,12 +80,17 @@ const ConversationForm = () => {
 
   //for deleting messages
   const handleDeleteMessage = async (id: number) => {
-    console.log(id);
+    
     const deleteQuery = deleteMessegeQuery(id);
     const data = await axiosCall(session.accessToken, deleteQuery);
     console.log(data);
     refetch();
   };
+
+
+  const handleEditMessageBtn = async(id:number)=>{
+    console.log(id);
+  }
 
   if (isLoading || tLoading) {
     return <Loading />;
@@ -119,7 +124,7 @@ const ConversationForm = () => {
                 <p className="text-gray-700">{message.content}</p>
                 <div className="flex justify-between">
                   <span className="text-xs text-gray-500">
-                    {message.created_at.split(":")[0]}
+                    {new Date(message.created_at).toLocaleString().slice(9)}
                   </span>
                   {message.user_id == session?.user?.id && (
                     <button
@@ -129,6 +134,14 @@ const ConversationForm = () => {
                       Delete
                     </button>
                   )}
+                  {/* {message.user_id == session?.user?.id && (
+                    <button
+                      className="text-gray-500 hover:text-gray-700 ml-2"
+                      onClick={() => handleEditMessageBtn(message.id)}
+                    >
+                      Edit
+                    </button>
+                  )} */}
                 </div>
               </div>
             </div>
