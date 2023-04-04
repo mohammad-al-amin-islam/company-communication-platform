@@ -4,7 +4,7 @@ import { allUserQuery, removeUserQuery } from "@/lib/query/hasuraQueries";
 import Link from "next/link";
 import React from "react";
 import { useQuery } from "react-query";
-import Loading from "../shared/loading";
+import Loading from "../../shared/loading";
 
 const EditUserForm = () => {
   const { data, isLoading } = useQuery(["alluser", allUserQuery], () =>
@@ -28,7 +28,7 @@ const EditUserForm = () => {
   return (
     <div className="overflow-x-auto">
       <h1 className="text-center text-3xl my-5 font-medium">
-        Remove user form here
+        Edit user form here
       </h1>
       <div className="border-b-2 border-gray-400 mb-2"></div>
 

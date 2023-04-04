@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import Loading from "../shared/loading";
+import Loading from "../../shared/loading";
 
 const ManageTeamsTable = () => {
   const { data: session }: any = useSession();

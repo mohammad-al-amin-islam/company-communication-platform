@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import Loading from "../shared/loading";
+import Loading from "../../shared/loading";
 import Card from "./start-conversation-card";
 
 const StartCoversationComponent = () => {
@@ -17,6 +17,7 @@ const StartCoversationComponent = () => {
     ["allTeamsSUser", session?.user?.id],
     () => axiosCall(session?.accessToken, query)
   );
+  console.log(data)
 
   const handleButtonClick = (id: any) => {
     router.push(`/dashboard/start-conversation/${id}`);
@@ -29,7 +30,7 @@ const StartCoversationComponent = () => {
   return (
     <div className="flex flex-col items-center">
       <h1 className="my-10 text-3xl font-medium">All Teams Conversation</h1>
-      {data.data.teams.length == 0 ? (
+      {data?.data?.teams.length == 0 ? (
         <p className="py-3 px-6 text-left">No conversation created or added by</p>
       ) : (
         " "

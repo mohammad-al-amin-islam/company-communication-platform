@@ -330,3 +330,19 @@ export const getTeamInfo = (id: any) => {
 
   return getTeam;
 };
+
+
+//edit message query
+export const editMessegeQuery = (id: any,content:string) => {
+  const editedMessage = {
+    query: `
+    mutation {
+      update_messages_by_pk(pk_columns: {id: ${id}}, _set: {content:"${content}"}}) {
+        id
+        content
+      }
+    }`,
+  };
+
+  return editedMessage;
+}

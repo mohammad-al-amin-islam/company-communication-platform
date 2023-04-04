@@ -9,7 +9,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useState, useRef } from "react";
 import { useQuery } from "react-query";
-import Loading from "../shared/loading";
+import Loading from "../../shared/loading";
 
 const AddParticipantForm = ({ id }: any) => {
   const selectedOptionRef = useRef<HTMLSelectElement>(null);
@@ -28,7 +28,7 @@ const AddParticipantForm = ({ id }: any) => {
     ["allParticioant", allPerticipantInfo],
     () => axiosCall(session?.accessToken, teamsQuery)
   );
-  console.log(teamMembers);
+  // console.log(teamMembers);
   // console.log(teamMembers.data.team_members);
   if (isLoading) {
     return <Loading />;
@@ -48,7 +48,7 @@ const AddParticipantForm = ({ id }: any) => {
       alert("Already in the team");
       return;
     }
-    console.log(addedMemeber);
+    // console.log(addedMemeber);
 
     const query2 = addTeamsMembers(teamId, userId);
 
@@ -62,7 +62,7 @@ const AddParticipantForm = ({ id }: any) => {
     // const query = removeTeams(id);
     const query = deleteTeamsMembers(id);
 
-    console.log(id);
+    // console.log(id);
 
     const data = await axiosCall(session?.accessToken, query);
     console.log(data);

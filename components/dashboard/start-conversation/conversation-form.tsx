@@ -10,51 +10,77 @@ import {
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "react-query";
-import Loading from "../shared/loading";
+import Loading from "../../shared/loading";
+import EditButton from "./edit-message-btn";
 
 const ConversationForm = () => {
   const messageValueRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const messageContainerRef = useRef<HTMLDivElement>(null);
+
   const { data: session }: any = useSession();
   const { query } = useRouter();
   const teamInfoQuery = getTeamInfo(query.id);
 
-  const { data: teamData,isLoading:tLoading } = useQuery("allTeams", () =>
+  const { data: teamData, isLoading: tLoading } = useQuery("allTeams", () =>
     axiosCall(session?.accessToken, teamInfoQuery)
   );
-
 
   //all messages
   const allMessagesQuery = getSpecificTeamMessage(query.id);
   const { data, refetch, isLoading } = useQuery("allMessages", () =>
     axiosCall(session?.accessToken, allMessagesQuery)
   );
+  console.log(data);
 
+  useEffect(() => {
+    if (messageContainerRef.current) {
+      messageContainerRef.current.scrollTop =
+        messageContainerRef.current.scrollHeight;
+    }
+  }, [data]);
+
+  //edit message
+  const [value, setValue] = useState(" ");
+  const handleSave = (newValue: string) => {
+    setValue(newValue);
+  };
 
   const inserTedQuery = sentMessageUsingMutation;
 
   //sending data using Mutation
-  const {mutate,  isLoading:mLoading,data:insertedData }:any = useMutation(
+  const {
+    mutate,
+    isLoading: mLoading,
+    data: insertedData,
+  }: any = useMutation(
     async (input: any) => {
       const token = `${session.accessToken}`;
       const headers = { Authorization: `Bearer ${token}` };
-      const { data } = await axios.post(process.env.hasuraApi as string, {
-        query: inserTedQuery,
-        variables: { content:input.message,team_id:input.teamId ,user_id:input.userId},
-      }, { headers });
+      const { data } = await axios.post(
+        process.env.hasuraApi as string,
+        {
+          query: inserTedQuery,
+          variables: {
+            content: input.message,
+            team_id: input.teamId,
+            user_id: input.userId,
+          },
+        },
+        { headers }
+      );
       return data;
     },
     {
       onSuccess: (data) => {
-        console.log('Message sent');
+        console.log("Message sent");
         refetch();
       },
     }
   );
 
-  
   // console.log(data)
 
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -70,7 +96,7 @@ const ConversationForm = () => {
 
     await mutate({ message, userId, teamId });
     formRef.current?.reset();
-    console.log(insertedData)
+    console.log(insertedData);
 
     if (insertedData?.data.insert_messages_one) {
       formRef.current?.reset();
@@ -80,17 +106,15 @@ const ConversationForm = () => {
 
   //for deleting messages
   const handleDeleteMessage = async (id: number) => {
-    
     const deleteQuery = deleteMessegeQuery(id);
     const data = await axiosCall(session.accessToken, deleteQuery);
     console.log(data);
     refetch();
   };
 
-
-  const handleEditMessageBtn = async(id:number)=>{
+  const handleEditMessageBtn = async (id: number) => {
     console.log(id);
-  }
+  };
 
   if (isLoading || tLoading) {
     return <Loading />;
@@ -100,9 +124,11 @@ const ConversationForm = () => {
   return (
     <div className="flex flex-col h-screen bg-white">
       <div className="p-4 border-b-2">
-        <h1 className="text-lg font-semibold">{teamData.data.teams_by_pk.name}</h1>
+        <h1 className="text-lg font-semibold">
+          {teamData.data.teams_by_pk.name}
+        </h1>
       </div>
-      <div className="flex-1 p-4 overflow-y-auto">
+      <div className="flex-1 p-4 overflow-y-auto" ref={messageContainerRef}>
         <div className="flex flex-col space-y-4">
           {data.data.messages.map((message: any) => (
             <div
@@ -113,35 +139,38 @@ const ConversationForm = () => {
                   : "justify-start"
               }`}
             >
-              <span className="text-xs text-gray-500 mr-1">
+              {/* <span className="text-xs text-gray-500 mr-1">
                 {message.user.name.split(" ")[0]}
-              </span>
+              </span> */}
               <div
                 className={`bg-gray-200 px-4 py-2 rounded-lg max-w-xs ${
                   message.user_id == session?.user?.id ? "ml-4" : "mr-4"
                 }`}
               >
+                <span className="text-xs text-green-900">
+                  {message.user.name.split(" ")[0]}
+                </span>
                 <p className="text-gray-700">{message.content}</p>
+
                 <div className="flex justify-between">
                   <span className="text-xs text-gray-500">
                     {new Date(message.created_at).toLocaleString().slice(9)}
                   </span>
-                  {message.user_id == session?.user?.id && (
-                    <button
-                      className="text-gray-500 hover:text-gray-700 ml-2"
-                      onClick={() => handleDeleteMessage(message.id)}
-                    >
-                      Delete
-                    </button>
-                  )}
-                  {/* {message.user_id == session?.user?.id && (
-                    <button
-                      className="text-gray-500 hover:text-gray-700 ml-2"
-                      onClick={() => handleEditMessageBtn(message.id)}
-                    >
-                      Edit
-                    </button>
-                  )} */}
+                  {/* {message.user_id == session?.user?.id && ( */}
+                  <button
+                    className="text-gray-500 hover:text-gray-700 ml-2"
+                    onClick={() => handleDeleteMessage(message.id)}
+                  >
+                    Delete
+                  </button>
+                  {/* )} */}
+
+                  <EditButton
+                    initialValue={value}
+                    onSave={handleSave}
+                    Id={message.id}
+                    refetch={refetch}
+                  />
                 </div>
               </div>
             </div>

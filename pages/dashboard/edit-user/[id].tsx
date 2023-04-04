@@ -1,5 +1,5 @@
 import Dashboard from "@/components/dashboard/main-dashboard";
-import SelectedUserForm from "@/components/dashboard/selected-user-form";
+import SelectedUserForm from "@/components/dashboard/edit-user/selected-user-form";
 import getAllUsers from "@/lib/hooks/getAllUsers";
 import { getUserById } from "@/lib/query/hasuraQueries";
 import { useRouter } from "next/router";

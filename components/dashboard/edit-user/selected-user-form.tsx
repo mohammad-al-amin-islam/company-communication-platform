@@ -1,7 +1,7 @@
 import getAllUsers from "@/lib/hooks/getAllUsers";
 import { updateUserInfo } from "@/lib/query/hasuraQueries";
 import { useState, useRef } from "react";
-import Loading from "../shared/loading";
+import Loading from "../../shared/loading";
 
 const SelectedUserForm = ({ user,isLoading}: any) => {
   const [selectedOption, setSelectedOption] = useState("");

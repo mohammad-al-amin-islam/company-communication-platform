@@ -1,4 +1,4 @@
-import ConversationForm from "@/components/dashboard/conversation-form";
+import ConversationForm from "@/components/dashboard/start-conversation/conversation-form";
 import Dashboard from "@/components/dashboard/main-dashboard";
 import PotectedSessionRoute from "@/lib/secured-page/protected-session-route";
 import React from "react";
