@@ -1,5 +1,6 @@
 import Dashboard from "@/components/dashboard/main-dashboard";
 import PotectedSessionRoute from "@/lib/secured-page/protected-session-route";
+import Image from "next/image";
 import React from "react";
 
 const DashboardPage = () => {
@@ -7,8 +8,9 @@ const DashboardPage = () => {
     <>
       <Dashboard>
         <PotectedSessionRoute>
-          <div className="flex justify-center items-center h-72">
-            <h1 className="text-2xl font-bold mb-4">Welcome to dashboard</h1>
+          <div className="flex flex-col items-center bg-white h-screen">
+            <h1 className="text-2xl font-bold my-4">Welcome to dashboard</h1>
+            <Image src="/dashboard-img.jpg" alt="My Image" width={450} height={450} />
           </div>
         </PotectedSessionRoute>
       </Dashboard>

@@ -14,7 +14,8 @@ import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import Loading from "../../shared/loading";
 import EditButton from "./edit-message-btn";
-
+import { AiOutlineTeam } from "react-icons/ai";
+import { AiOutlineSend } from "react-icons/ai";
 const ConversationForm = () => {
   const messageValueRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -123,14 +124,19 @@ const ConversationForm = () => {
 
   return (
     <div className="flex flex-col h-screen bg-white">
-      <div className="p-4 border-b-2">
-        <h1 className="text-lg font-semibold">
+      <div className="p-4 border-b-2 mx-2">
+        <h1 className="text-lg font-semibold flex">
+          <AiOutlineTeam className="text-2xl "/>
           {teamData.data.teams_by_pk.name}
         </h1>
+        <p className="text-sm">Total members: {teamData.data.teams_by_pk.team_members.length}</p>
       </div>
       <div className="flex-1 p-4 overflow-y-auto" ref={messageContainerRef}>
+        {
+          data.data.messages.length == 0 && <p className="text-sm mt-10 text-center">Converstation is not started yet</p>
+        }
         <div className="flex flex-col space-y-4">
-          {data.data.messages.map((message: any) => (
+          {data.data.messages.sort((a:any, b:any) => a.id - b.id).map((message: any) => (
             <div
               key={message.id}
               className={`flex ${
@@ -185,12 +191,13 @@ const ConversationForm = () => {
               className="flex-1 bg-slate-200 border rounded-full py-2 px-4 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Type a message..."
               ref={messageValueRef}
+              required
             />
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-600 rounded-full p-2 text-white"
+              className="bg-blue-500 hover:bg-blue-600 rounded-lg p-2 text-white"
             >
-              Send
+              <AiOutlineSend className="text-lg"/>
             </button>
           </div>
         </form>

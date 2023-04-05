@@ -22,8 +22,8 @@ export default NextAuth({
         // Add logic here to look up the user from the credentials supplied
 
         const hasuraEndPoint = "https://easy-reptile-22.hasura.app/v1/graphql";
-        const hasuraSecret =
-          "fJatRu46jjdSAj3QQ9uYyAK8wOrgPBUxWFedc1z8YpHivmqguOC1MNqdBlhQGiua";
+        // const hasuraSecret =
+        //   "fJatRu46jjdSAj3QQ9uYyAK8wOrgPBUxWFedc1z8YpHivmqguOC1MNqdBlhQGiua";
 
         //get all data of users email addresses
         const { data: result }: any = await axios.post(
@@ -32,7 +32,7 @@ export default NextAuth({
           {
             headers: {
               "Content-Type": "application/json",
-              "x-hasura-admin-secret": hasuraSecret,
+              "x-hasura-admin-secret": process.env.hasuraAdminSecret,
             },
           }
         );

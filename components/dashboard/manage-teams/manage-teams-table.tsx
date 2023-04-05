@@ -32,9 +32,10 @@ const ManageTeamsTable = () => {
 
   return (
     <div>
-      <h1 className="text-center text-3xl my-5 font-medium">
+      {/* <h1 className="text-center text-3xl my-5 font-medium">
         Manage Teams Here
-      </h1>
+      </h1> */}
+      <h1 className="my-5 text-3xl font-medium border-2 w-2/4 mx-auto border-b-green-500 border-spacing-y-5 p-3 text-center font-sans">Manage Teams Here</h1>
 
       <table className="min-w-full">
         <thead>

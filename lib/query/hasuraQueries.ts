@@ -263,7 +263,7 @@ export const sentMessageUsingMutation = `
     }
   }
   
-  `
+  `;
 
 //get all messages
 export const getAllMessage = {
@@ -324,6 +324,9 @@ export const getTeamInfo = (id: any) => {
     query: `query MyQuery {
       teams_by_pk(id: ${id}) {
         name
+        team_members {
+          id
+        }
       }
     }`,
   };
@@ -331,9 +334,8 @@ export const getTeamInfo = (id: any) => {
   return getTeam;
 };
 
-
 //edit message query
-export const editMessegeQuery = (id: any,content:string) => {
+export const editMessegeQuery = (id: any, content: string) => {
   const editedMessage = {
     query: `
     mutation {
@@ -345,4 +347,24 @@ export const editMessegeQuery = (id: any,content:string) => {
   };
 
   return editedMessage;
-}
+};
+
+export const getUpdateInformationQuery = `
+mutation MyMutation($id: Int = 10, $name: String = "", $password: Int = 10) {
+  update_users_by_pk(pk_columns: {id: $id}, _set: {name: $name, password: $password}) {
+    updated_at
+  }
+}`;
+
+export const getUserInfo = (id: any) => {
+  const getdata = {
+    query: `query MyQuery($id: Int = 10) {
+      users_by_pk(id: $id) {
+        name
+      }
+    }`,
+    variables: { id: id },
+  };
+
+  return getdata;
+};

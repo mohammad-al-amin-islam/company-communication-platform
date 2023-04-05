@@ -1,7 +1,8 @@
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useState } from "react";
-
+import DropdownMenu from "./dropdown-menu";
+import { TiMessages } from "react-icons/Ti";
 const MainNavigationBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: session }: any = useSession();
@@ -39,10 +40,17 @@ const MainNavigationBar = () => {
           Sign Out
         </button>
       )}
-      {session && (
+      {/* {session && (
         <p className="bg-slate-400 text-white px-3 py-3 rounded-full text-sm font-medium">
           {firstName[0]}
         </p>
+      )} */}
+      {session && (
+        <DropdownMenu
+          userName={session?.user?.name}
+          Email={session?.user?.email}
+          Id={session?.user?.id}
+        />
       )}
     </>
   );
@@ -51,7 +59,8 @@ const MainNavigationBar = () => {
       <div className="mx-auto px-4 py-2 sm:max-w-7xl sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <Link href="/" className="text-white font-bold text-xl">
+            <TiMessages className="text-white text-xl mr-1" />
+            <Link href="/" className="text-white font-bold text-xl font-mono">
               CCP
             </Link>
           </div>

@@ -41,8 +41,9 @@ const AddUserForm = () => {
 
   return (
     <div className="flex flex-col items-center ">
-      <h1 className="my-10 text-3xl font-medium">Add user here</h1>
-      <form className="flex flex-col w-2/4 shadow-lg p-7" ref={formRef} onSubmit={handleSubmit}>
+      {/* <h1 className="my-10 text-3xl font-medium">Add user here</h1> */}
+      <h1 className="my-5 text-3xl font-medium border-2  border-b-green-500 border-spacing-y-5 p-3">Add user here</h1>
+      <form className="flex flex-col w-2/4 shadow-lg p-7 bg-white rounded-lg" ref={formRef} onSubmit={handleSubmit}>
         <div>
           <label htmlFor="input" className="mb-2">
             Enter user name:

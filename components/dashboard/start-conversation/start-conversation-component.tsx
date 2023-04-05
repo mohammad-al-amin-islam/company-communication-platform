@@ -17,7 +17,7 @@ const StartCoversationComponent = () => {
     ["allTeamsSUser", session?.user?.id],
     () => axiosCall(session?.accessToken, query)
   );
-  console.log(data)
+  console.log(data);
 
   const handleButtonClick = (id: any) => {
     router.push(`/dashboard/start-conversation/${id}`);
@@ -29,9 +29,14 @@ const StartCoversationComponent = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="my-10 text-3xl font-medium">All Teams Conversation</h1>
+      {/* <h1 className="my-10 text-3xl font-medium"></h1> */}
+      <h1 className="my-5 text-3xl font-medium  border-2 border-b-green-500 border-spacing-y-5 p-3">
+        All Teams Conversation
+      </h1>
       {data?.data?.teams.length == 0 ? (
-        <p className="py-3 px-6 text-left">No conversation created or added by</p>
+        <p className="py-3 px-6 text-left">
+          No conversation created or added by
+        </p>
       ) : (
         " "
       )}
