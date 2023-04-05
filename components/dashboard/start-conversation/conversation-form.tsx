@@ -14,8 +14,8 @@ import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import Loading from "../../shared/loading";
 import EditButton from "./edit-message-btn";
-import { AiOutlineTeam } from "react-icons/ai";
-import { AiOutlineSend } from "react-icons/ai";
+// import { AiOutlineTeam } from "react-icons/ai";
+// import { AiOutlineSend } from "react-icons/ai";
 const ConversationForm = () => {
   const messageValueRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -126,7 +126,7 @@ const ConversationForm = () => {
     <div className="flex flex-col h-screen bg-white">
       <div className="p-4 border-b-2 mx-2">
         <h1 className="text-lg font-semibold flex">
-          <AiOutlineTeam className="text-2xl "/>
+          {/* <AiOutlineTeam className="text-2xl "/> */}
           {teamData.data.teams_by_pk.name}
         </h1>
         <p className="text-sm">Total members: {teamData.data.teams_by_pk.team_members.length}</p>
@@ -197,7 +197,8 @@ const ConversationForm = () => {
               type="submit"
               className="bg-blue-500 hover:bg-blue-600 rounded-lg p-2 text-white"
             >
-              <AiOutlineSend className="text-lg"/>
+              {/* <AiOutlineSend className="text-lg"/> */}
+              Send
             </button>
           </div>
         </form>
