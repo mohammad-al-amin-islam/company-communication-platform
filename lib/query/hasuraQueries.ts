@@ -184,6 +184,27 @@ export const addTeamsMembers = (teamId: any, userId: any) => {
 
 //all perticipant list
 
+// export const allPerticipantInfo = (id: any, limit: any, offset: any) => {
+//   const allTeamsParticipant = {
+//     query: `query MyQuery {
+//       team_members(where: {team_id: {_eq: ${id}}}, limit: ${limit}, offset: ${offset}, order_by: {user: {name: asc}}) {
+//         id
+//         user {
+//           name
+//           created_at
+//           id
+//         }
+//       }
+//       team_members_aggregate(where: {team_id: {_eq: ${id}}}) {
+//         aggregate {
+//           count
+//         }
+//       }
+//     }
+//     `,
+//   };
+//   return allTeamsParticipant;
+// };
 export const allPerticipantInfo = (id: any) => {
   const allTeamsParticipant = {
     query: `query MyQuery {
@@ -367,4 +388,25 @@ export const getUserInfo = (id: any) => {
   };
 
   return getdata;
+};
+
+//pagination
+export const getAlluserPagination = (limit: any, offset: any) => {
+  const getUser = {
+    query: `query MyQuery {
+      users(limit: ${limit}, offset: ${offset}, order_by: {created_at: desc}), {
+        email
+        name
+        role
+        id
+      }
+      users_aggregate {
+        aggregate {
+          count
+        }
+      }
+    }`,
+  };
+
+  return getUser;
 };

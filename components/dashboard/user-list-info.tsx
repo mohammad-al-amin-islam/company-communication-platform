@@ -1,16 +1,38 @@
 import getAllUsers from "@/lib/hooks/getAllUsers";
-import { allUserQuery } from "@/lib/query/hasuraQueries";
-import React from "react";
+import { allUserQuery, getAlluserPagination } from "@/lib/query/hasuraQueries";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import Loading from "../shared/loading";
-
+import { GrNext } from "react-icons/gr";
+import { GrPrevious } from "react-icons/gr";
 const UserListInfo = () => {
+  const [page, setPage] = useState(1);
+  const pageSize = 7;
+
+  const offset = (page - 1) * pageSize;
+
+  const allUserQuery = getAlluserPagination(pageSize, offset);
   const { data, isLoading } = useQuery(["alluser", allUserQuery], () =>
     getAllUsers(allUserQuery)
   );
+  console.log(data);
+
   if (isLoading) {
-    return <Loading/>;
+    return <Loading />;
   }
+
+  const handlePrevPage = () => {
+    setPage((prevPage) => prevPage - 1);
+  };
+
+  const handleNextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
+  const pageCount = Math.ceil(
+    data.data.users_aggregate?.aggregate.count / pageSize
+  );
+  console.log(pageCount);
 
   return (
     <div className="overflow-x-auto">
@@ -40,6 +62,23 @@ const UserListInfo = () => {
           ))}
         </tbody>
       </table>
+
+      <div className="flex justify-center mt-7">
+        <button
+          onClick={handlePrevPage}
+          disabled={page === 1}
+          className="bg-red-700 disabled:bg-slate-400 font-bold p-3 rounded-full mr-5"
+        >
+          <GrPrevious className="text-blue" />
+        </button>
+        <button
+          onClick={handleNextPage}
+          disabled={page === pageCount}
+          className="bg-red-700 disabled:bg-slate-400 font-bold p-3 rounded-full"
+        >
+          <GrNext className="text-blue" />
+        </button>
+      </div>
     </div>
   );
 };

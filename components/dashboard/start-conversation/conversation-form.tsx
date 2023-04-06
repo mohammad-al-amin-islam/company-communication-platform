@@ -14,8 +14,8 @@ import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import Loading from "../../shared/loading";
 import EditButton from "./edit-message-btn";
-// import { AiOutlineTeam } from "react-icons/ai";
-// import { AiOutlineSend } from "react-icons/ai";
+import { AiOutlineTeam } from "react-icons/ai";
+import { AiOutlineSend } from "react-icons/ai";
 const ConversationForm = () => {
   const messageValueRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -126,61 +126,69 @@ const ConversationForm = () => {
     <div className="flex flex-col h-screen bg-white">
       <div className="p-4 border-b-2 mx-2">
         <h1 className="text-lg font-semibold flex">
-          {/* <AiOutlineTeam className="text-2xl "/> */}
+          <AiOutlineTeam className="text-2xl " />
           {teamData.data.teams_by_pk.name}
         </h1>
-        <p className="text-sm">Total members: {teamData.data.teams_by_pk.team_members.length}</p>
+        <p className="text-sm">
+          Total members: {teamData.data.teams_by_pk.team_members.length}
+        </p>
       </div>
       <div className="flex-1 p-4 overflow-y-auto" ref={messageContainerRef}>
-        {
-          data.data.messages.length == 0 && <p className="text-sm mt-10 text-center">Converstation is not started yet</p>
-        }
+        {data.data.messages.length == 0 && (
+          <p className="text-sm mt-10 text-center">
+            Converstation is not started yet
+          </p>
+        )}
         <div className="flex flex-col space-y-4">
-          {data.data.messages.sort((a:any, b:any) => a.id - b.id).map((message: any) => (
-            <div
-              key={message.id}
-              className={`flex ${
-                message.user_id == session?.user?.id
-                  ? "justify-end"
-                  : "justify-start"
-              }`}
-            >
-              {/* <span className="text-xs text-gray-500 mr-1">
-                {message.user.name.split(" ")[0]}
-              </span> */}
+          {data.data.messages
+            .sort((a: any, b: any) => a.id - b.id)
+            .map((message: any) => (
               <div
-                className={`bg-gray-200 px-4 py-2 rounded-lg max-w-xs ${
-                  message.user_id == session?.user?.id ? "ml-4" : "mr-4"
+                key={message.id}
+                className={`flex ${
+                  message.user_id == session?.user?.id
+                    ? "justify-end"
+                    : "justify-start"
                 }`}
               >
-                <span className="text-xs text-green-900">
-                  {message.user.name.split(" ")[0]}
-                </span>
-                <p className="text-gray-700">{message.content}</p>
-
-                <div className="flex justify-between">
-                  <span className="text-xs text-gray-500">
-                    {new Date(message.created_at).toLocaleString().slice(9)}
+                {/* <span className="text-xs text-gray-500 mr-1">
+                {message.user.name.split(" ")[0]}
+              </span> */}
+                <div
+                  className={`bg-gray-200 px-4 py-2 rounded-lg max-w-xs ${
+                    message.user_id == session?.user?.id ? "ml-4" : "mr-4"
+                  }`}
+                >
+                  <span className="text-xs text-green-900">
+                    {message.user.name.split(" ")[0]}
                   </span>
-                  {/* {message.user_id == session?.user?.id && ( */}
-                  <button
-                    className="text-gray-500 hover:text-gray-700 ml-2"
-                    onClick={() => handleDeleteMessage(message.id)}
-                  >
-                    Delete
-                  </button>
-                  {/* )} */}
+                  <p className="text-gray-700">{message.content}</p>
 
-                  <EditButton
-                    initialValue={value}
-                    onSave={handleSave}
-                    Id={message.id}
-                    refetch={refetch}
-                  />
+                  <div className="flex justify-between">
+                    <span className="text-xs text-gray-500">
+                      {new Date(message.created_at).toLocaleString().slice(9)}
+                    </span>
+                    {/* {message.user_id == session?.user?.id && ( */}
+                    <button
+                      className="text-gray-500 hover:text-gray-700 ml-2"
+                      onClick={() => handleDeleteMessage(message.id)}
+                    >
+                      Delete
+                    </button>
+                    {/* )} */}
+
+                    {message.user_id == session?.user?.id && (
+                      <EditButton
+                        initialValue={value}
+                        onSave={handleSave}
+                        Id={message.id}
+                        refetch={refetch}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
       <div className="p-4 border-t-2">
@@ -197,8 +205,7 @@ const ConversationForm = () => {
               type="submit"
               className="bg-blue-500 hover:bg-blue-600 rounded-lg p-2 text-white"
             >
-              {/* <AiOutlineSend className="text-lg"/> */}
-              Send
+              <AiOutlineSend className="text-lg" />
             </button>
           </div>
         </form>

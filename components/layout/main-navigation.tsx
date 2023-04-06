@@ -2,7 +2,7 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useState } from "react";
 import DropdownMenu from "./dropdown-menu";
-// import { TiMessages } from "react-icons/Ti";
+import { TiMessages } from "react-icons/ti";
 const MainNavigationBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: session }: any = useSession();
@@ -59,7 +59,7 @@ const MainNavigationBar = () => {
       <div className="mx-auto px-4 py-2 sm:max-w-7xl sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            {/* <TiMessages className="text-white text-xl mr-1" /> */}
+            <TiMessages className="text-white text-xl mr-1" />
             <Link href="/" className="text-white font-bold text-xl font-mono">
               CCP
             </Link>

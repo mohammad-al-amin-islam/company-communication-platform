@@ -51,14 +51,15 @@ const RemoveUserForm = () => {
               <td className="py-3 px-6 text-left">{user.role}</td>
               <td className="py-3 px-6 text-left">{user.email}</td>
               <td className="py-3 px-6 text-left">
-                {user.role !== "admin" && (
+                {/* {user.role !== "admin" && ( */}
                   <button
-                    className="bg-blue-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md focus:outline-none focus:shadow-outline"
+                    className="bg-blue-500 disabled:bg-slate-400 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md focus:outline-none focus:shadow-outline"
                     onClick={() => handleButtonClick(user.email)}
+                    disabled={user.role === "admin"}
                   >
                     Remove
                   </button>
-                )}
+                {/* )} */}
               </td>
             </tr>
           ))}

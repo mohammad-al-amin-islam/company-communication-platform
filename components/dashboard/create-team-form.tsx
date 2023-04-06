@@ -1,8 +1,6 @@
 import axiosCall from "@/lib/hooks/axiosCall";
 import {
-  addTeamsMembers,
   allTeamsQueryById,
-  createTeams,
 } from "@/lib/query/hasuraQueries";
 import axios from "axios";
 import { useSession } from "next-auth/react";
