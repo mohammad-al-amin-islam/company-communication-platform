@@ -108,3 +108,27 @@ a {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{
+  .btn {
+    @apply w-32 text-start mt-5 bg-blue-500  text-white font-bold py-1 px-3 rounded-md 
+  }
+  .card {
+    @apply w-2/3 rounded-2xl overflow-hidden shadow-lg mb-5 bg-white
+  }
+  .link-style{
+    @apply flex items-center hover:scale-105 hover:translate-x-2  duration-200
+  }
+  .input-field{
+    @apply appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight
+  }
+  .btn-link{
+    @apply mt-5 bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded
+  }
+  .input-dashboard{
+    @apply w-full p-2 mb-4 rounded-md shadow-md
+  }
+  .btn-dashboard{
+    @apply bg-blue-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md
+  }
+}

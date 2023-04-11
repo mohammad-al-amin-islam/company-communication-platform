@@ -39,7 +39,7 @@ const SignInForm = () => {
           <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2">Email</label>
             <input
-              className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="input-field  focus:outline-none focus:shadow-outline"
               id="username"
               type="email"
               placeholder="Enter your Email Address"
@@ -51,7 +51,7 @@ const SignInForm = () => {
               Password
             </label>
             <input
-              className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="input-field  focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
               placeholder="Enter your password"
@@ -71,7 +71,7 @@ const SignInForm = () => {
           <p className="mb-5">Don not have any account?</p>
           <Link
             href="/sign-up"
-            className="mt-5 bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="btn-link focus:outline-none focus:shadow-outline"
           >
             Sign up here
           </Link>

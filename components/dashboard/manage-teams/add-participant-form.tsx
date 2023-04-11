@@ -41,7 +41,7 @@ const AddParticipantForm = ({ id }: any) => {
     const userId = selectedOptionRef.current?.value ?? "";
     console.log(userId);
 
-    const addedMemeber = teamMembers.data.team_members.find(
+    const addedMemeber = teamMembers?.data?.team_members.find(
       (teamMember: any) => teamMember.user.id == userId
     );
     if (addedMemeber) {
@@ -66,7 +66,7 @@ const AddParticipantForm = ({ id }: any) => {
 
     const data = await axiosCall(session?.accessToken, query);
     console.log(data);
-    if (data.data.delete_team_members_by_pk.id) {
+    if (data?.data?.delete_team_members_by_pk.id) {
       alert("Participant deleted successfully");
     }
   };
@@ -128,7 +128,7 @@ const AddParticipantForm = ({ id }: any) => {
                 {user.user.id == session.user.id?"admin" : (
                   <button
                     onClick={() => handleDeleteTParticipantBtn(user.id)}
-                    className="bg-blue-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md focus:outline-none focus:shadow-outline"
+                    className="btn-dashboard focus:outline-none focus:shadow-outline"
                   >
                     Remove
                   </button>

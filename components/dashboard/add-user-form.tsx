@@ -53,7 +53,7 @@ const AddUserForm = () => {
             name="Name"
             id="name"
             ref={nameValueRef}
-            className="w-full p-2 mb-4 rounded-md shadow-md"
+            className="input-dashboard"
           />
         </div>
         <div>
@@ -65,7 +65,7 @@ const AddUserForm = () => {
             name="email"
             id="email"
             ref={emailRef}
-            className="w-full p-2 mb-4 rounded-md shadow-md"
+            className="input-dashboard"
           />
         </div>
         <div>
@@ -77,7 +77,7 @@ const AddUserForm = () => {
             name="password"
             id="input"
             ref={passwordRef}
-            className="w-full p-2 mb-4 rounded-md shadow-md"
+            className="input-dashboard"
           />
         </div>
         
@@ -88,7 +88,7 @@ const AddUserForm = () => {
           name="options"
           id="options"
           ref={selectedOptionRef}
-          className="w-full p-2 mb-4 rounded-md shadow-md"
+          className="input-dashboard"
         >
           <option value="">--Select--</option>
           <option value="manager">Manager</option>

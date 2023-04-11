@@ -56,7 +56,7 @@ const EditUserForm = () => {
                 {user.role !== "admin" && (
                   <Link
                     href={`/dashboard/edit-user/${user.id}`}
-                    className="bg-blue-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md focus:outline-none focus:shadow-outline"
+                    className="btn-dashboard focus:outline-none focus:shadow-outline"
                   >
                     Edit User
                   </Link>

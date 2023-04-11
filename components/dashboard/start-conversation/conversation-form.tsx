@@ -127,10 +127,10 @@ const ConversationForm = () => {
       <div className="p-4 border-b-2 mx-2">
         <h1 className="text-lg font-semibold flex">
           <AiOutlineTeam className="text-2xl " />
-          {teamData.data.teams_by_pk.name}
+          {teamData?.data?.teams_by_pk.name}
         </h1>
         <p className="text-sm">
-          Total members: {teamData.data.teams_by_pk.team_members.length}
+          Total members: {teamData?.data?.teams_by_pk?.team_members.length}
         </p>
       </div>
       <div className="flex-1 p-4 overflow-y-auto" ref={messageContainerRef}>

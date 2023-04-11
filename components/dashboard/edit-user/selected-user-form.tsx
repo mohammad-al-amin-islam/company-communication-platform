@@ -48,7 +48,7 @@ const SelectedUserForm = ({ user,isLoading}: any) => {
             type="text"
             name="Name"
             id="name"
-            className="w-full p-2 mb-4 rounded-md shadow-md"
+            className="input-dashboard"
             value={user.name}
             disabled
           />
@@ -63,7 +63,7 @@ const SelectedUserForm = ({ user,isLoading}: any) => {
             id="email"
             value={user.email}
             disabled
-            className="w-full p-2 mb-4 rounded-md shadow-md"
+            className="input-dashboard"
           />
         </div>
         <div>
@@ -75,7 +75,7 @@ const SelectedUserForm = ({ user,isLoading}: any) => {
             name="password"
             id="input"
             ref={passwordRef}
-            className="w-full p-2 mb-4 rounded-md shadow-md"
+            className="input-dashboard"
             required
           />
         </div>
@@ -87,7 +87,7 @@ const SelectedUserForm = ({ user,isLoading}: any) => {
           name="options"
           id="options"
           ref={selectedOptionRef}
-          className="w-full p-2 mb-4 rounded-md shadow-md"
+          className="input-dashboard"
           required
         >
           <option value="">--Select--</option>

@@ -55,12 +55,15 @@ const MainNavigationBar = () => {
     </>
   );
   return (
-    <nav className="bg-blue-500 bg-gradient-repeating">
+    <nav className="bg-blue-500 bg-gradient-repeating ">
       <div className="mx-auto px-4 py-2 sm:max-w-7xl sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <TiMessages className="text-white text-xl mr-1" />
-            <Link href="/" className="text-white font-bold text-xl font-mono">
+          <div>
+            <Link
+              href="/"
+              className="text-white font-bold text-xl font-mono flex items-center "
+            >
+              <TiMessages className="text-white text-xl mr-1" />
               CCP
             </Link>
           </div>

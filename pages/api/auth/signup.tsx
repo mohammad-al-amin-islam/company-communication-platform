@@ -4,7 +4,6 @@ async function handler(req: any, res: any) {
   if (req.method !== "POST") {
     return;
   }
-  // console.log(req.body);
 
   const email = req.body.email;
   const password = req.body.password;
@@ -20,10 +19,14 @@ async function handler(req: any, res: any) {
     res.status(422).json({ message: "Invalid email or password" });
     return;
   }
+  const passwordInt  = +password;
+  if(!passwordInt){
+    res.status(422).json({ message: "Set password with numbers only" });
+    return;
+  }
 
-  const hasuraEndPoint = "https://easy-reptile-22.hasura.app/v1/graphql";
-  const hasuraSecret =
-    "fJatRu46jjdSAj3QQ9uYyAK8wOrgPBUxWFedc1z8YpHivmqguOC1MNqdBlhQGiua";
+  const hasuraEndPoint:any = process.env.hasuraApi;
+  const hasuraSecret = process.env.hasuraAdminSecret
 
   //get all data of users email addresses
   const { data: result }: any = await axios.post(
