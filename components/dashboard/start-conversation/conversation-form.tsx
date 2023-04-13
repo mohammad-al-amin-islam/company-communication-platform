@@ -43,7 +43,7 @@ const ConversationForm = () => {
       Authorization: `Bearer ${session.accessToken}`,
     };
     const client = createClient({
-      url: "ws://easy-reptile-22.hasura.app/v1/graphql",
+      url: "wss://easy-reptile-22.hasura.app/v1/graphql",
       connectionParams: {
         headers,
       },
