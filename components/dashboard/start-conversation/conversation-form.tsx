@@ -4,6 +4,7 @@ import {
   getAllMessage,
   getSendMessageQuery,
   getSpecificTeamMessage,
+  getSpecificTeamMessageSubsCription,
   getTeamInfo,
   sentMessageUsingMutation,
 } from "@/lib/query/hasuraQueries";
@@ -16,10 +17,14 @@ import Loading from "../../shared/loading";
 import EditButton from "./edit-message-btn";
 import { AiOutlineTeam } from "react-icons/ai";
 import { AiOutlineSend } from "react-icons/ai";
+
+import { createClient } from "graphql-ws";
+
 const ConversationForm = () => {
   const messageValueRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const messageContainerRef = useRef<HTMLDivElement>(null);
+  const [messages, setMessages] = useState([]);
 
   const { data: session }: any = useSession();
   const { query } = useRouter();
@@ -30,18 +35,62 @@ const ConversationForm = () => {
   );
 
   //all messages
-  const allMessagesQuery = getSpecificTeamMessage(query.id);
-  const { data, refetch, isLoading } = useQuery("allMessages", () =>
-    axiosCall(session?.accessToken, allMessagesQuery)
-  );
-  console.log(data);
+
+  //using subbscriptions
+
+  useEffect(() => {
+    const headers = {
+      Authorization: `Bearer ${session.accessToken}`,
+    };
+    const client = createClient({
+      url: "ws://easy-reptile-22.hasura.app/v1/graphql",
+      connectionParams: {
+        headers,
+      },
+    });
+
+    const subscriptionQuery = getSpecificTeamMessageSubsCription(query.id);
+
+    const onNext = (data: any) => {
+      // console.log("Received data:", data);
+      setMessages(data?.data?.messages);
+    };
+
+    const onError = (error: any) => {
+      console.error("Subscription error:", error);
+    };
+
+    const onComplete = () => {
+      console.log("Subscription completed");
+    };
+
+    const sink = { next: onNext, error: onError, complete: onComplete };
+
+    const payload = subscriptionQuery;
+
+    const result = client.subscribe(payload, sink);
+
+    // console.log(result);
+  }, []);
+
+  // console.log(messages);
+
+
+
+  // using only react query
+
+  // const allMessagesQuery = getSpecificTeamMessage(query.id);
+  // const { data, refetch, isLoading } = useQuery("allMessages", () =>
+  //   axiosCall(session?.accessToken, allMessagesQuery)
+  // );
+  // // console.log(data);
 
   useEffect(() => {
     if (messageContainerRef.current) {
       messageContainerRef.current.scrollTop =
         messageContainerRef.current.scrollHeight;
     }
-  }, [data]);
+  }, [messages]);
 
   //edit message
   const [value, setValue] = useState(" ");
@@ -77,7 +126,7 @@ const ConversationForm = () => {
     {
       onSuccess: (data) => {
         console.log("Message sent");
-        refetch();
+        // refetch();
       },
     }
   );
@@ -97,11 +146,11 @@ const ConversationForm = () => {
 
     await mutate({ message, userId, teamId });
     formRef.current?.reset();
-    console.log(insertedData);
+    // console.log(insertedData);
 
     if (insertedData?.data.insert_messages_one) {
       formRef.current?.reset();
-      refetch();
+      // refetch();
     }
   };
 
@@ -110,14 +159,14 @@ const ConversationForm = () => {
     const deleteQuery = deleteMessegeQuery(id);
     const data = await axiosCall(session.accessToken, deleteQuery);
     console.log(data);
-    refetch();
+    // refetch();
   };
 
   const handleEditMessageBtn = async (id: number) => {
     console.log(id);
   };
 
-  if (isLoading || tLoading) {
+  if ( tLoading) {
     return <Loading />;
   }
   // console.log(data);
@@ -134,13 +183,13 @@ const ConversationForm = () => {
         </p>
       </div>
       <div className="flex-1 p-4 overflow-y-auto" ref={messageContainerRef}>
-        {data.data.messages.length == 0 && (
+        {messages.length == 0 && (
           <p className="text-sm mt-10 text-center">
             Converstation is not started yet
           </p>
         )}
         <div className="flex flex-col space-y-4">
-          {data.data.messages
+          {messages
             .sort((a: any, b: any) => a.id - b.id)
             .map((message: any) => (
               <div
@@ -182,7 +231,7 @@ const ConversationForm = () => {
                         initialValue={value}
                         onSave={handleSave}
                         Id={message.id}
-                        refetch={refetch}
+                        // refetch={refetch}
                       />
                     )}
                   </div>

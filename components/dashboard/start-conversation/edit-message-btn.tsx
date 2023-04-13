@@ -7,10 +7,10 @@ type Props = {
   initialValue: string;
   onSave: (value: string) => void;
   Id: any;
-  refetch: any;
+  // refetch: any;
 };
 
-const EditButton = ({ initialValue, onSave, Id, refetch }: Props) => {
+const EditButton = ({ initialValue, onSave, Id}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState(initialValue);
   const formRef = useRef<HTMLFormElement>(null);
@@ -37,7 +37,7 @@ const EditButton = ({ initialValue, onSave, Id, refetch }: Props) => {
     // const query = editMessegeQuery(Id, value);
     const { data } = await axiosCall(session?.accessToken, query);
     if (data?.update_messages_by_pk) {
-      refetch();
+      // refetch();
       formRef.current?.reset();
       setValue("");
     }
@@ -71,6 +71,7 @@ const EditButton = ({ initialValue, onSave, Id, refetch }: Props) => {
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
+                  required
                 />
               </div>
               <div className="flex justify-end">

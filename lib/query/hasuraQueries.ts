@@ -321,6 +321,25 @@ export const getSpecificTeamMessage = (id: any) => {
 
   return getAllMessage;
 };
+export const getSpecificTeamMessageSubsCription = (id: any) => {
+  const getAllMessage = {
+    query: `
+    subscription MySubscription {
+      messages(where: {team_id: {_eq: ${id}}}) {
+        content
+        created_at
+        id
+        team_id
+        user_id
+        user {
+          name
+        }
+      }
+    }`,
+  };
+
+  return getAllMessage;
+};
 
 //delete message
 
