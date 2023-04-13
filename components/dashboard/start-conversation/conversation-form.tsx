@@ -71,7 +71,7 @@ const ConversationForm = () => {
     const result = client.subscribe(payload, sink);
 
     // console.log(result);
-  }, []);
+  }, [query.id,session.accessToken]);
 
   // console.log(messages);
 
