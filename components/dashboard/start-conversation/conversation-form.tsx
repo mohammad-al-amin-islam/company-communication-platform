@@ -52,7 +52,7 @@ const ConversationForm = () => {
     const subscriptionQuery = getSpecificTeamMessageSubsCription(query.id);
 
     const onNext = (data: any) => {
-      // console.log("Received data:", data);
+      console.log("Received data:", data);
       setMessages(data?.data?.messages);
     };
 
@@ -71,9 +71,9 @@ const ConversationForm = () => {
     const result = client.subscribe(payload, sink);
 
     // console.log(result);
-  }, [query.id,session.accessToken]);
+  }, []);
 
-  // console.log(messages);
+  console.log(messages);
 
 
 
@@ -183,14 +183,14 @@ const ConversationForm = () => {
         </p>
       </div>
       <div className="flex-1 p-4 overflow-y-auto" ref={messageContainerRef}>
-        {messages.length == 0 && (
+        {/* {messages?.length == 0 && (
           <p className="text-sm mt-10 text-center">
             Converstation is not started yet
           </p>
-        )}
+        )} */}
         <div className="flex flex-col space-y-4">
           {messages
-            .sort((a: any, b: any) => a.id - b.id)
+            ?.sort((a: any, b: any) => a.id - b.id)
             .map((message: any) => (
               <div
                 key={message.id}
