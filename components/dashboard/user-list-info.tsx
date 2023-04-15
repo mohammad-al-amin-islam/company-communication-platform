@@ -15,7 +15,7 @@ const UserListInfo = () => {
   const { data, isLoading } = useQuery(["alluser", allUserQuery], () =>
     getAllUsers(allUserQuery)
   );
-  console.log(data);
+  // console.log(data);
 
   if (isLoading) {
     return <Loading />;
@@ -32,11 +32,11 @@ const UserListInfo = () => {
   const pageCount = Math.ceil(
     data.data.users_aggregate?.aggregate.count / pageSize
   );
-  console.log(pageCount);
+  // console.log(pageCount);
 
   return (
     <div className="overflow-x-auto">
-      <h1 className="text-center text-3xl my-5 font-medium">All user list</h1>
+      <h1 className="text-center text-3xl my-5 font-medium text-indigo-500">All user list</h1>
       <div className="border-b-2 border-gray-400 mb-2"></div>
 
       <table className="min-w-full">

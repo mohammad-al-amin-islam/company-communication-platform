@@ -27,7 +27,7 @@ const EditUserForm = () => {
 
   return (
     <div className="overflow-x-auto">
-      <h1 className="text-center text-3xl my-5 font-medium">
+      <h1 className="text-center text-3xl my-5 font-medium text-indigo-500">
         Edit user form here
       </h1>
       <div className="border-b-2 border-gray-400 mb-2"></div>

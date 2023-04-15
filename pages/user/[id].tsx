@@ -60,8 +60,8 @@ const UpdateUserInfo = () => {
 
   return (
     <PotectedSessionRoute>
-      <div className="bg-gray-200 pb-20">
-        <div className="flex flex-col items-center">
+      <div className="bg-gray-200 pb-20 h-screen">
+        <div className="flex flex-col items-center justify-center">
           <h1 className="my-5 text-3xl font-medium  border-2 border-b-green-500 border-spacing-y-5 p-3">
             Update Your Information here
           </h1>

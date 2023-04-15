@@ -39,7 +39,7 @@ const AddParticipantForm = ({ id }: any) => {
 
     const teamId = id;
     const userId = selectedOptionRef.current?.value ?? "";
-    console.log(userId);
+    // console.log(userId);
 
     const addedMemeber = teamMembers?.data?.team_members.find(
       (teamMember: any) => teamMember.user.id == userId
@@ -73,7 +73,7 @@ const AddParticipantForm = ({ id }: any) => {
 
   return (
     <div className="flex flex-col items-center ">
-      <h1 className="my-10 text-3xl font-medium">Add Participant Here</h1>
+      <h1 className="my-10 text-3xl font-medium text-indigo-500">Add Participant Here</h1>
       <form
         className="flex flex-col w-2/4 shadow-lg p-7"
         ref={formRef}

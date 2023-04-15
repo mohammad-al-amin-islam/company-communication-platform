@@ -9,7 +9,7 @@ const DashboardPage = () => {
       <Dashboard>
         <PotectedSessionRoute>
           <div className="flex flex-col items-center bg-white h-screen">
-            <h1 className="text-2xl font-bold my-4">Welcome to dashboard</h1>
+            <h1 className="text-2xl font-bold my-4 text-rose-900">Welcome to dashboard</h1>
             <Image src="/dashboard-img.jpg" alt="My Image" width={450} height={450} />
           </div>
         </PotectedSessionRoute>

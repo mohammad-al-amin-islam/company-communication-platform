@@ -28,14 +28,16 @@ const ManageTeamsTable = () => {
       alert("Team deleted successfully");
     }
   };
-  console.log(data);
+  // console.log(data);
 
   return (
     <div>
       {/* <h1 className="text-center text-3xl my-5 font-medium">
         Manage Teams Here
       </h1> */}
-      <h1 className="my-5 text-3xl font-medium border-2 w-2/4 mx-auto border-b-green-500 border-spacing-y-5 p-3 text-center font-sans">Manage Teams Here</h1>
+      <h1 className="my-5 text-3xl font-medium border-2 w-2/4 mx-auto border-b-green-500 border-spacing-y-5 p-3 text-center font-sans text-indigo-500">
+        Manage Teams Here
+      </h1>
 
       <table className="min-w-full">
         <thead>
@@ -51,35 +53,36 @@ const ManageTeamsTable = () => {
           {data.data.teams.length == 0 ? (
             <p className="py-3 px-6 text-left">No Teams Created Yet</p>
           ) : (
-            " "
+            <>
+              {data?.data?.teams?.map((user: any) => (
+                <tr
+                  key={user.created_at}
+                  className="border-b border-gray-200 hover:bg-gray-100"
+                >
+                  <td className="py-3 px-6 text-left whitespace-nowrap">
+                    {user.name}
+                  </td>
+                  <td className="py-3 px-6 text-left">{user.created_at}</td>
+                  <td className="py-3 px-6 text-left">
+                    <Link
+                      href={`/dashboard/manage-teams/${user.id}`}
+                      className="bg-blue-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md focus:outline-none focus:shadow-outline"
+                    >
+                      Click here
+                    </Link>
+                  </td>
+                  <td className="py-3 px-6 text-left">
+                    <button
+                      onClick={() => handleDeleteTeamsBtn(user.id)}
+                      className="bg-blue-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md focus:outline-none focus:shadow-outline"
+                    >
+                      Click here
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </>
           )}
-          {data?.data?.teams?.map((user: any) => (
-            <tr
-              key={user.created_at}
-              className="border-b border-gray-200 hover:bg-gray-100"
-            >
-              <td className="py-3 px-6 text-left whitespace-nowrap">
-                {user.name}
-              </td>
-              <td className="py-3 px-6 text-left">{user.created_at}</td>
-              <td className="py-3 px-6 text-left">
-                <Link
-                  href={`/dashboard/manage-teams/${user.id}`}
-                  className="bg-blue-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md focus:outline-none focus:shadow-outline"
-                >
-                  Click here
-                </Link>
-              </td>
-              <td className="py-3 px-6 text-left">
-                <button
-                  onClick={() => handleDeleteTeamsBtn(user.id)}
-                  className="bg-blue-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md focus:outline-none focus:shadow-outline"
-                >
-                  Click here
-                </button>
-              </td>
-            </tr>
-          ))}
         </tbody>
       </table>
     </div>

@@ -15,7 +15,7 @@ import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import Loading from "../../shared/loading";
 import EditButton from "./edit-message-btn";
-import { AiOutlineTeam } from "react-icons/ai";
+import { AiFillDelete, AiOutlineTeam } from "react-icons/ai";
 import { AiOutlineSend } from "react-icons/ai";
 
 import { createClient } from "graphql-ws";
@@ -25,6 +25,7 @@ const ConversationForm = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const messageContainerRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState([]);
+  const [isLoadings, setLoading] = useState(true);
 
   const { data: session }: any = useSession();
   const { query } = useRouter();
@@ -54,6 +55,7 @@ const ConversationForm = () => {
     const onNext = (data: any) => {
       // console.log("Received data:", data);
       setMessages(data?.data?.messages);
+      setLoading(false);
     };
 
     const onError = (error: any) => {
@@ -71,11 +73,9 @@ const ConversationForm = () => {
     const result = client.subscribe(payload, sink);
 
     // console.log(result);
-  }, [query?.id,session?.accessToken]);
+  }, [query?.id, session?.accessToken]);
 
   // console.log(messages);
-
-
 
   // using only react query
 
@@ -166,7 +166,7 @@ const ConversationForm = () => {
     console.log(id);
   };
 
-  if ( tLoading) {
+  if (isLoadings || tLoading) {
     return <Loading />;
   }
   // console.log(data);
@@ -196,44 +196,51 @@ const ConversationForm = () => {
                 key={message.id}
                 className={`flex ${
                   message.user_id == session?.user?.id
-                    ? "justify-end"
+                    ? "justify-start flex-row-reverse"
                     : "justify-start"
                 }`}
               >
-                {/* <span className="text-xs text-gray-500 mr-1">
-                {message.user.name.split(" ")[0]}
-              </span> */}
+                <span className="text-xs text-gray-500">
+                  <h1 className="bg-red-200 p-3 rounded-full">
+                    {message.user.name.slice(0, 1)}
+                  </h1>
+                </span>
+
                 <div
-                  className={`bg-gray-200 px-4 py-2 rounded-lg max-w-xs ${
-                    message.user_id == session?.user?.id ? "ml-4" : "mr-4"
+                  className={` px-4 py-2 rounded-lg max-w-xs ${
+                    message.user_id == session?.user?.id
+                      ? "bg-blue-500 ml-4 mr-2"
+                      : "bg-gray-500 mr-4 ml-2"
                   }`}
                 >
-                  <span className="text-xs text-green-900">
+                  {/* <span className="text-xs text-green-900">
                     {message.user.name.split(" ")[0]}
-                  </span>
-                  <p className="text-gray-700">{message.content}</p>
+                  </span> */}
+                  <p className="text-white">{message.content}</p>
 
-                  <div className="flex justify-between">
-                    <span className="text-xs text-gray-500">
-                      {new Date(message.created_at).toLocaleString().slice(9)}
+                  <div className="flex justify-between mt-1">
+                    <span className="text-xs text-white">
+                      {new Date(message.created_at).toLocaleString().slice(10)}
                     </span>
                     {/* {message.user_id == session?.user?.id && ( */}
-                    <button
-                      className="text-gray-500 hover:text-gray-700 ml-2"
-                      onClick={() => handleDeleteMessage(message.id)}
-                    >
-                      Delete
-                    </button>
-                    {/* )} */}
+                    <div>
+                      <button
+                        className="text-white hover:text-yellow-500 ml-2"
+                        onClick={() => handleDeleteMessage(message.id)}
+                      >
+                        <AiFillDelete />
+                      </button>
+                      {/* )} */}
 
-                    {message.user_id == session?.user?.id && (
-                      <EditButton
-                        initialValue={value}
-                        onSave={handleSave}
-                        Id={message.id}
-                        // refetch={refetch}
-                      />
-                    )}
+                      {message.user_id == session?.user?.id && (
+                        <EditButton
+                          initialValue={value}
+                          onSave={handleSave}
+                          Id={message.id}
+                          // refetch={refetch}
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

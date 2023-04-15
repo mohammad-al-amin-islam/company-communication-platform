@@ -8,10 +8,10 @@ const DropdownMenu = ({ userName,Email,Id }: any) => {
   const toggleDropdown = () => setIsOpen((prevState) => !prevState);
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block text-left  ">
       <button
         type="button"
-        className="bg-slate-400 text-white px-3 py-3 rounded-full text-sm font-medium"
+        className="bg-slate-400 text-white px-3 py-3 rounded-full text-sm font-medium outline-none hover:outline-red-950"
         id="options-menu"
         aria-haspopup="true"
         aria-expanded="true"

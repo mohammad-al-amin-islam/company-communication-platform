@@ -2,6 +2,7 @@ import axiosCall from "@/lib/hooks/axiosCall";
 import { editMessegeQuery } from "@/lib/query/hasuraQueries";
 import { useSession } from "next-auth/react";
 import React, { useRef, useState } from "react";
+import { AiFillEdit } from "react-icons/ai";
 
 type Props = {
   initialValue: string;
@@ -19,7 +20,7 @@ const EditButton = ({ initialValue, onSave, Id}: Props) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSave(value);
-    console.log(value, Id);
+    // console.log(value, Id);
 
     //query for editing the message
     const query = {
@@ -49,9 +50,9 @@ const EditButton = ({ initialValue, onSave, Id}: Props) => {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="text-gray-500 hover:text-gray-700 ml-2"
+        className="text-white hover:text-black ml-2"
       >
-        Edit
+        <AiFillEdit />
       </button>
 
       {isOpen && (

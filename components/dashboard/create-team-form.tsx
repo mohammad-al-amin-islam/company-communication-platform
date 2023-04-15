@@ -80,7 +80,7 @@ const CreateTeamForm = () => {
     // }
     const userId = session.user.id;
     await mutate({ adminID, teamName, userId });
-    if (mLoading) {
+    if (isLoading || mLoading) {
       return <Loading />;
     }
     formRef.current?.reset();
@@ -89,7 +89,7 @@ const CreateTeamForm = () => {
   return (
     <div className="mx-auto max-w-2xl">
       {/* <h1 className="text-3xl font-bold mb-4 text-center">Create Teams Here</h1> */}
-      <h1 className="my-5 text-3xl font-medium border-2 w-2/4 mx-auto border-b-green-500 border-spacing-y-5 p-3 text-center font-sans">Create Teams Here</h1>
+      <h1 className="my-5 text-3xl font-medium border-2 w-2/4 mx-auto border-b-green-500 border-spacing-y-5 p-3 text-center font-sans text-indigo-500">Create Teams Here</h1>
       
       <form onSubmit={handleSubmit} className="space-y-4" ref={formRef}>
         <div>
