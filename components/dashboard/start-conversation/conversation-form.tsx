@@ -52,7 +52,7 @@ const ConversationForm = () => {
     const subscriptionQuery = getSpecificTeamMessageSubsCription(query.id);
 
     const onNext = (data: any) => {
-      console.log("Received data:", data);
+      // console.log("Received data:", data);
       setMessages(data?.data?.messages);
     };
 
@@ -71,9 +71,9 @@ const ConversationForm = () => {
     const result = client.subscribe(payload, sink);
 
     // console.log(result);
-  }, []);
+  }, [query?.id,session?.accessToken]);
 
-  console.log(messages);
+  // console.log(messages);
 
 
 
@@ -125,7 +125,7 @@ const ConversationForm = () => {
     },
     {
       onSuccess: (data) => {
-        console.log("Message sent");
+        // console.log("Message sent");
         // refetch();
       },
     }
@@ -139,7 +139,7 @@ const ConversationForm = () => {
     const userId = session?.user?.id;
     const teamId = query.id;
 
-    console.log(message, userId, teamId);
+    // console.log(message, userId, teamId);
 
     // const insertQuery = getSendMessageQuery(message, teamId, userId);
     // const data = await axiosCall(session?.accessToken, insertQuery);
@@ -158,7 +158,7 @@ const ConversationForm = () => {
   const handleDeleteMessage = async (id: number) => {
     const deleteQuery = deleteMessegeQuery(id);
     const data = await axiosCall(session.accessToken, deleteQuery);
-    console.log(data);
+    // console.log(data);
     // refetch();
   };
 
@@ -183,11 +183,11 @@ const ConversationForm = () => {
         </p>
       </div>
       <div className="flex-1 p-4 overflow-y-auto" ref={messageContainerRef}>
-        {/* {messages?.length == 0 && (
+        {messages?.length == 0 && (
           <p className="text-sm mt-10 text-center">
             Converstation is not started yet
           </p>
-        )} */}
+        )}
         <div className="flex flex-col space-y-4">
           {messages
             ?.sort((a: any, b: any) => a.id - b.id)

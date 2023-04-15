@@ -1,38 +1,16 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# This is a [Next.js](https://nextjs.org/) project.You can use it for as chatting applications with your own team and community;
+## For getting started [click here](https://company-communication-platform.vercel.app/)
 
-## Getting Started
+## Projects Details
+-▶ Used yarn for package manager instead of npm.
 
-First, run the development server:
+-▶ Created a company communication platform where the admin can signup and invite other members with a specific role (admin, manager, member).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+-▶ Managers and members can only login if they are already added by an admin to the system.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+-▶ The admin can create group/team chat where he adds one/multiple manager(s) and memeber(s) and they can communicate between them by sending messages.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+-▶ While creating a team chat admins automatically become member of that chat.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+-▶ Each participants in a chat has different sets of permissions.				
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

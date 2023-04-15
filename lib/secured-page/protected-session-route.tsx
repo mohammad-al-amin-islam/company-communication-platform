@@ -5,7 +5,7 @@ import React from 'react';
 const PotectedSessionRoute = ({children}:any) => {
 
     const { data: session, status } = useSession();
-    console.log(session);
+    // console.log(session);
     const router = useRouter();
   
    

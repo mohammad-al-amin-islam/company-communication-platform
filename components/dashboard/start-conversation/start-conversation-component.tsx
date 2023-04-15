@@ -17,7 +17,7 @@ const StartCoversationComponent = () => {
     ["allTeamsSUser", session?.user?.id],
     () => axiosCall(session?.accessToken, query)
   );
-  console.log(data);
+  // console.log(data);
 
   const handleButtonClick = (id: any) => {
     router.push(`/dashboard/start-conversation/${id}`);
