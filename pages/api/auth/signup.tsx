@@ -14,7 +14,7 @@ async function handler(req: any, res: any) {
     !email ||
     !email.includes("@") ||
     !password ||
-    password.trim().length < 7
+    password.trim().length < 4
   ) {
     res.status(422).json({ message: "Invalid email or password" });
     return;
