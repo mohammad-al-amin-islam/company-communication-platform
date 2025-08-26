@@ -21,7 +21,7 @@ export default NextAuth({
       async authorize(credentials: any, req: any): Promise<any> {
         // Add logic here to look up the user from the credentials supplied
 
-        const hasuraEndPoint = "https://easy-reptile-22.hasura.app/v1/graphql";
+        const hasuraEndPoint = "https://harmless-sailfish-17.hasura.app/v1/graphql";
         // const hasuraSecret =
         //   "fJatRu46jjdSAj3QQ9uYyAK8wOrgPBUxWFedc1z8YpHivmqguOC1MNqdBlhQGiua";
 
